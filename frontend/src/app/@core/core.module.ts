@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent, FooterComponent } from './components';
+import { HeaderComponent, FooterComponent, AlertComponent } from './components';
 import { SampleComponent } from './layouts';
 import { RouterModule } from '@angular/router';
 
@@ -10,7 +10,8 @@ import { RouterModule } from '@angular/router';
   declarations: [
     HeaderComponent,
     FooterComponent,
-    SampleComponent
+    SampleComponent,
+    AlertComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +20,8 @@ import { RouterModule } from '@angular/router';
   exports: [
     HeaderComponent,
     FooterComponent,
-    SampleComponent
+    SampleComponent,
+    AlertComponent
   ]
 })
 export class CoreModule {
