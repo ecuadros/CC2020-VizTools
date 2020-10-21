@@ -7,6 +7,7 @@ import { ChartsModule } from 'ng2-charts'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DevExtremeModule } from './devextreme.module';
+import { CoreModule } from './@core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -25,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     DevExtremeModule,
     ChartsModule,
+    CoreModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
