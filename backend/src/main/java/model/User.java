@@ -45,4 +45,8 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "university_id", nullable = true)
+	private University university;
+
 }

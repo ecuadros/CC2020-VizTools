@@ -22,6 +22,6 @@ public class UserDto {
 
     private Boolean isAdmin;
 
-    private Long institutionId;
+    private Long universityId;
 
 }

@@ -21,6 +21,10 @@ public class ModelMapper {
             }
         }
         
+        if (item.getUniversity() != null) {
+            itemDto.setUniversityId(item.getUniversity().getId());
+        }
+        
         return itemDto;
     }
 

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 
 import dto.mapper.ModelMapper;
 import dto.model.UserDto;
-import exception.UserException.UserNotFoundException;
-import exception.UserException.UserConflictException;
+import exception.UserException.*;
+import exception.UniversityException.*;
 import model.Role;
 import model.RoleName;
 import model.User;
@@ -31,6 +31,9 @@ public class UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private UniversityService universityService;
 
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
@@ -88,6 +91,13 @@ public class UserService {
         }
 
         item.setRoles(new HashSet<>(Arrays.asList(userRole)));
+
+        if (itemDto.getUniversityId() == null) {
+            throw new UniversityNullException();
+        }
+        
+        University university = universityService.findById(itemDto.getUniversityId());
+        item.setUniversity(university);
 
         return ModelMapper.toUserDto(repository.save(item));
     }
