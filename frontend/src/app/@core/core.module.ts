@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent, FooterComponent, AlertComponent } from './components';
 import { SampleComponent } from './layouts';
 import { RouterModule } from '@angular/router';
+import { AlertService, AuthService } from './services';
 
 
 
@@ -28,7 +29,10 @@ export class CoreModule {
   static forRoot(): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,
-      providers: [],
+      providers: [
+        AlertService,
+        AuthService
+      ],
     };
   }
 }
