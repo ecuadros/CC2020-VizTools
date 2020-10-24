@@ -4,6 +4,7 @@ import { HeaderComponent, FooterComponent, AlertComponent } from './components';
 import { SampleComponent } from './layouts';
 import { RouterModule } from '@angular/router';
 import { AlertService, AuthService } from './services';
+import { AuthGuard } from './guards';
 
 
 
@@ -31,7 +32,8 @@ export class CoreModule {
       ngModule: CoreModule,
       providers: [
         AlertService,
-        AuthService
+        AuthService,
+        AuthGuard
       ],
     };
   }
