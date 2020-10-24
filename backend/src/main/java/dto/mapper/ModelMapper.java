@@ -90,4 +90,22 @@ public class ModelMapper {
         return itemDto;
     }
 
+    public static CountryDto toCountryDto(Country item) {
+        CountryDto itemDto = new CountryDto();
+        itemDto.setId(item.getId());
+        itemDto.setName(item.getNameEn());
+        itemDto.setAcronym(item.getIso2());
+        return itemDto;
+    }
+
+    public static UniversityDto toUniversityDto(University item) {
+        UniversityDto itemDto = new UniversityDto();
+        itemDto.setId(item.getId());
+        itemDto.setName(item.getName());
+        itemDto.setAcronym(item.getAcronym());
+        itemDto.setUrl(item.getUrl());
+        itemDto.setCountryId(item.getCountry().getId());
+        return itemDto;
+    }
+
 }
