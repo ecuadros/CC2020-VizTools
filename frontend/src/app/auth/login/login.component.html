@@ -1,0 +1,63 @@
+<div class="wrapper">
+  <div class="d-flex align-items-center justify-content-center form-container h-100">
+    <div class="card">
+      <div class="header">
+        <div class="arrow-left">
+          <a routerLink="/" aria-label="Back">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>
+          </a>
+        </div>
+        <div class="logo">
+          <img height="60" src="assets/acm-ieee.jpg">
+        </div>
+      </div>
+      <div class="auth-block">
+        <h1 class="title">Login</h1>
+        <app-alert></app-alert>
+
+        <form (ngSubmit)="onLogin()" [formGroup]="loginForm" aria-labelledby="title">
+
+          <div class="form-group">
+            <label class="label" for="input-email">Email address:</label>
+            <input class="form-control" formControlName="email" name="email" id="input-email" pattern=".+@.+\..+"
+              placeholder="Email address" autofocus>
+            <ng-container *ngIf="form.email.invalid && form.email.touched">
+              <p class="error-message" *ngIf="form.email.errors?.required">
+                Email is required!
+              </p>
+              <p class="error-message" *ngIf="form.email.errors?.pattern">
+                Email should be the real one!
+              </p>
+            </ng-container>
+          </div>
+
+          <div class="form-group">
+            <label class="label" for="input-password">Password:</label>
+            <input class="form-control" formControlName="password" name="password" type="password" id="input-password"
+              placeholder="Password">
+            <ng-container *ngIf="form.password.invalid && form.password.touched ">
+              <p class="error-message" *ngIf="form.password.errors?.required">
+                Password is required!
+              </p>
+              <p class="error-message" *ngIf="form.password.errors?.minlength || form.password.errors?.maxlength">
+                Password should contains from 6 to 18 characters
+              </p>
+            </ng-container>
+          </div>
+          <button class="btn btn-primary w-100" status="success" [disabled]="submitted || !loginForm.valid"
+            [class.btn-pulse]="submitted">
+            Log In
+          </button>
+        </form>
+        <section class="another-action" aria-label="Register">
+          Don't have an account? <a class="text-link" routerLink="../auth/register">Register</a>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>
