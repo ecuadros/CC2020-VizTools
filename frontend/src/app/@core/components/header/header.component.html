@@ -21,5 +21,8 @@
         </ng-container>
       </ul>
     </div>
+    <div *ngIf="isAuthenticated">
+      <button type="button" class="btn btn-outline-primary" (click)="logout()">Logout</button>
+    </div>
   </div>
 </nav>
