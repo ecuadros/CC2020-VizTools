@@ -40,4 +40,31 @@ public class ModelMapper {
 
         return itemDto;
     }
+
+    public static ProgramDto toProgramDto(Program item) {
+        ProgramDto itemDto = new ProgramDto();
+        itemDto.setId(item.getId());
+        itemDto.setName(item.getName());
+        itemDto.setAcronym(item.getAcronym());
+        return itemDto;
+    }
+
+    public static DKAGDto toDKAGDto(DKAG item) {
+        DKAGDto itemDto = new DKAGDto();
+        itemDto.setId(item.getId());
+        itemDto.setName(item.getName());
+        itemDto.setIndex(item.getIndex());
+        return itemDto;
+    }
+
+    public static DKADto toDKADto(DKA item) {
+        DKADto itemDto = new DKADto();
+        itemDto.setId(item.getId());
+        itemDto.setName(item.getName());
+        itemDto.setIndex(item.getIndex());
+        itemDto.setDkagId(item.getDkag().getId());
+        itemDto.setDkagIndex(item.getDkag().getIndex());
+        return itemDto;
+    }
+
 }
