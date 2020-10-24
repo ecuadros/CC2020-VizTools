@@ -5,11 +5,13 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { DevExtremeModule } from 'devextreme-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '../@core/core.module';
+import { AuthComponent } from './auth.component';
 
 
 
 @NgModule({
   declarations: [
+    AuthComponent,
     LoginComponent
   ],
   imports: [
