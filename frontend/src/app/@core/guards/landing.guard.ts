@@ -13,7 +13,11 @@ export class LandingdGuard implements CanActivate {
     if (!this.authService.isAuthenticated()) {
       return true;
     }
-    this.router.navigate(['/admin/']);
+    if (this.authService.isAdmin()) {
+      this.router.navigate(['/admin/']);
+    } else {
+      this.router.navigate(['/user/']);
+    }
     return false;
   }
 

@@ -40,11 +40,21 @@ export class AuthService {
     return localStorage.getItem('token')
   }
 
+  get admin(): string {
+    return localStorage.getItem('admin')
+  }
+
   isAuthenticated(): boolean {
     const token = this.token;
     if (!token) return false;
     const jwtHelper = new JwtHelperService();
     return !jwtHelper.isTokenExpired(token);
+  }
+
+  isAdmin(): boolean {
+    const admin = this.admin;
+    if (!admin) return false;
+    return admin == "true";
   }
 
 }
