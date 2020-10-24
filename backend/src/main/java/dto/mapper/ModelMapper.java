@@ -67,4 +67,27 @@ public class ModelMapper {
         return itemDto;
     }
 
+    public static WeightDto toWeightDto(Weight item) {
+        WeightDto itemDto = new WeightDto();
+        itemDto.setId(item.getId());
+        itemDto.setMin(item.getMin());
+        itemDto.setMax(item.getMax());
+        itemDto.setProgramId(item.getProgram().getId());
+        itemDto.setProgramTitle(item.getProgram().getAcronym());
+
+        DKA dka = item.getDka();
+        DKAG dkag = dka.getDkag();
+
+        itemDto.setDkaId(dka.getId());
+        itemDto.setDkagId(dkag.getId());
+        
+        itemDto.setDkaTitle(dka.getName());
+        itemDto.setDkagTitle(dkag.getName());
+
+        itemDto.setDkaIndex(dka.getIndex());
+        itemDto.setDkagIndex(dkag.getIndex());
+
+        return itemDto;
+    }
+
 }
