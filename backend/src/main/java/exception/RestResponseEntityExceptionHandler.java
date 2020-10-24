@@ -6,6 +6,8 @@ import exception.DKAGException.*;
 import exception.DKAException.*;
 import exception.ProgramException.*;
 import exception.WeightException.*;
+import exception.UniversityException.*;
+import exception.CountryException.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -61,6 +63,20 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(WeightNotFoundException.class)
     public final String WeightNotFoundHandler(WeightNotFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ExceptionHandler(UniversityNullException.class)
+    public final String UniversityNullHandler(UniversityNullException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ExceptionHandler(CountryNullException.class)
+    public final String CountryNullHandler(CountryNullException ex) {
         return ex.getMessage();
     }
 
