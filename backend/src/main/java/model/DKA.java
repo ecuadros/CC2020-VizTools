@@ -37,4 +37,7 @@ public class DKA {
     @JoinColumn(name = "dkag_id", nullable = false)
     private DKAG dkag;
 
+    @OneToMany(mappedBy = "dka", cascade = CascadeType.ALL)
+    private Set<Weight> weights;
+
 }

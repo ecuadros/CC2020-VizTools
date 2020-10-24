@@ -27,4 +27,7 @@ public class Program {
 
     private String acronym;
 
+    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Weight> weights;
+
 }
