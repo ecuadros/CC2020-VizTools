@@ -1,5 +1,6 @@
 package controller;
 
+import service.UniversityService;
 import service.UserService;
 import security.JwtTokenUtil;
 import model.*;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import dto.mapper.ModelMapper;
 import dto.model.AuthTokenDto;
 import dto.model.LoginDto;
+import dto.model.RegisterDto;
+import dto.model.UniversityDto;
 import dto.model.UserDto;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -31,6 +34,9 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UniversityService universityService;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginReq) throws AuthenticationException {
 
@@ -41,9 +47,19 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserDto registerReq) {
-        registerReq.setIsAdmin(false);
-        UserDto userDto = userService.create(registerReq);
+    public ResponseEntity<?> register(@RequestBody RegisterDto registerReq) {
+
+        UserDto userDto = registerReq.getUser();
+        UniversityDto universityDto = registerReq.getUniversity();
+        
+        if (!registerReq.getIsUniversityRegister() && universityDto != null) {
+            universityDto = universityService.create(universityDto);
+            userDto.setUniversityId(universityDto.getId());
+        }
+
+        userDto.setIsAdmin(false);
+        userDto = userService.create(userDto);
+        
         return new ResponseEntity<>(generateToken(userDto.getEmail()), HttpStatus.OK);
     }
 
