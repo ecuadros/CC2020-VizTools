@@ -5,7 +5,9 @@ import { SampleComponent, BlockComponent } from './layouts';
 import { RouterModule } from '@angular/router';
 import {
   AlertService,
-  AuthService
+  AuthService,
+  CountryService,
+  UniversityService
 } from './services';
 import { AuthGuard, LandingdGuard } from './guards';
 
@@ -38,6 +40,8 @@ export class CoreModule {
       providers: [
         AlertService,
         AuthService,
+        CountryService,
+        UniversityService,
         AuthGuard,
         LandingdGuard
       ],
