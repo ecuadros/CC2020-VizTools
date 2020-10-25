@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Entity
 @Table(name = "university", uniqueConstraints = {
-    @UniqueConstraint(columnNames = { "name" })
+    @UniqueConstraint(columnNames = { "name", "country_id" })
 })
 public class University {
     
