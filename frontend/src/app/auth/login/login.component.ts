@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
     this.authService.logout();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
-  back (){}
 
   onLogin() {
     let email = this.form.email.value

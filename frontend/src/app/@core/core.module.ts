@@ -1,9 +1,12 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent, FooterComponent, AlertComponent } from './components';
-import { SampleComponent } from './layouts';
+import { SampleComponent, BlockComponent } from './layouts';
 import { RouterModule } from '@angular/router';
-import { AlertService, AuthService } from './services';
+import {
+  AlertService,
+  AuthService
+} from './services';
 import { AuthGuard, LandingdGuard } from './guards';
 
 
@@ -13,7 +16,8 @@ import { AuthGuard, LandingdGuard } from './guards';
     HeaderComponent,
     FooterComponent,
     SampleComponent,
-    AlertComponent
+    AlertComponent,
+    BlockComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +27,8 @@ import { AuthGuard, LandingdGuard } from './guards';
     HeaderComponent,
     FooterComponent,
     SampleComponent,
-    AlertComponent
+    AlertComponent,
+    BlockComponent
   ]
 })
 export class CoreModule {
