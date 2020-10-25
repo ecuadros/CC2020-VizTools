@@ -18,4 +18,6 @@ public class AuthTokenDto {
     
     private Boolean isAdmin;
 
+    private Long universityId;
+
 }
