@@ -29,6 +29,20 @@ export class AuthService {
       ));
   }
 
+  register(form: any) {
+    return this.http.post<any>(AuthService.path + 'register', form)
+      .pipe(map(user => {
+        if (user && user.token) {
+          console.log(user)
+          localStorage.setItem('token', user.token);
+          localStorage.setItem('admin', user.isAdmin);
+          localStorage.setItem('name', user.name);
+          localStorage.setItem('id', user.id);
+        }
+      }
+      ));
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('admin');
