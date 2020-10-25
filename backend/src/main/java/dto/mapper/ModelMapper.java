@@ -119,4 +119,34 @@ public class ModelMapper {
         return itemDto;
     }
 
+    public static UProgramDto toUProgramDto(UProgram item) {
+        UProgramDto itemDto = new UProgramDto();
+        itemDto.setId(item.getId());
+        itemDto.setName(item.getName());
+        itemDto.setNativeName(item.getNativeName());
+        itemDto.setAcronym(item.getAcronym());
+        itemDto.setUniversityId(item.getUniversity().getId());
+        return itemDto;
+    }
+
+    public static UWeightDto toUWeightDto(UWeight item) {
+        UWeightDto itemDto = new UWeightDto();
+        itemDto.setId(item.getId());
+        itemDto.setValue(item.getValue());
+        itemDto.setProgramId(item.getUprogram().getId());
+
+        DKA dka = item.getDka();
+        DKAG dkag = dka.getDkag();
+
+        itemDto.setDkaId(dka.getId());
+
+        String dkaIndex = dkag.getIndex().toString() + '.' + dka.getIndex().toString();
+        itemDto.setDkaTitle(dkaIndex  + ". " + dka.getName());
+
+        String dkagIndex = dkag.getIndex().toString();
+        itemDto.setDkagTitle(dkagIndex  + ". " + dkag.getName());
+
+        return itemDto;
+    }
+
 }
