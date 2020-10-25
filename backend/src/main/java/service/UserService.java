@@ -70,6 +70,7 @@ public class UserService {
         User item = new User();
         item.setName(itemDto.getName());
         item.setLastName(itemDto.getLastName());
+        item.setOccupation(itemDto.getOccupation());
         
         Optional<User> itemOp = repository.findByEmail(itemDto.getEmail());
 

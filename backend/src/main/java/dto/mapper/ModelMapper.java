@@ -10,6 +10,7 @@ public class ModelMapper {
         itemDto.setId(item.getId());
         itemDto.setName(item.getName());
         itemDto.setLastName(item.getLastName());
+        itemDto.setOccupation(item.getOccupation());
         itemDto.setIsAdmin(false);
         
         itemDto.setEmail(item.getEmail());
