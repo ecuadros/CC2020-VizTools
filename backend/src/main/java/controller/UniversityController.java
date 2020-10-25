@@ -35,6 +35,11 @@ public class UniversityController {
         return new ResponseEntity<>(service.read(id), HttpStatus.OK);
     }
 
+    @GetMapping("/country/{countryId}")
+    public ResponseEntity<?> readByCountry(@PathVariable Long countryId) {
+        return new ResponseEntity<>(service.readByCountry(countryId), HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable Long id,

@@ -78,6 +78,16 @@ public class UniversityService {
         return items;
     }
 
+    public List<UniversityDto> readByCountry(Long countryId) {
+        List<UniversityDto> items = new ArrayList<>();
+
+        for (University item : repository.findByCountryId(countryId)) {
+            items.add(ModelMapper.toUniversityDto(item));
+        }
+
+        return items;
+    }
+
     public UniversityDto update(UniversityDto newItem, Long id) {
         University item = findById(id);
 
