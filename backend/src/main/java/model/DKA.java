@@ -40,4 +40,7 @@ public class DKA {
     @OneToMany(mappedBy = "dka", cascade = CascadeType.ALL)
     private Set<Weight> weights;
 
+    @OneToMany(mappedBy = "dka", cascade = CascadeType.ALL)
+    private Set<UWeight> uweights;
+
 }

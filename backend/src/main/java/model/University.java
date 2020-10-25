@@ -36,4 +36,7 @@ public class University {
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL)
     private Set<User> users;
 
+    @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<UProgram> uprograms;
+
 }
