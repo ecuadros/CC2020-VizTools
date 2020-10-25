@@ -19,11 +19,7 @@ export class AuthService {
     return this.http.post<any>(AuthService.path + 'login', form)
       .pipe(map(user => {
         if (user && user.token) {
-          console.log(user)
-          localStorage.setItem('token', user.token);
-          localStorage.setItem('admin', user.isAdmin);
-          localStorage.setItem('name', user.name);
-          localStorage.setItem('id', user.id);
+          this.storeUser(user);
         }
       }
       ));
@@ -33,11 +29,7 @@ export class AuthService {
     return this.http.post<any>(AuthService.path + 'register', form)
       .pipe(map(user => {
         if (user && user.token) {
-          console.log(user)
-          localStorage.setItem('token', user.token);
-          localStorage.setItem('admin', user.isAdmin);
-          localStorage.setItem('name', user.name);
-          localStorage.setItem('id', user.id);
+          this.storeUser(user);
         }
       }
       ));
@@ -48,6 +40,7 @@ export class AuthService {
     localStorage.removeItem('admin');
     localStorage.removeItem('name');
     localStorage.removeItem('id');
+    localStorage.removeItem('university')
   }
 
   get token(): string {
@@ -69,6 +62,17 @@ export class AuthService {
     const admin = this.admin;
     if (!admin) return false;
     return admin == "true";
+  }
+
+  private storeUser(user: any) {
+    localStorage.setItem('token', user.token);
+    localStorage.setItem('admin', user.isAdmin);
+    localStorage.setItem('name', user.name);
+    localStorage.setItem('id', user.id);
+
+    if (!user.isAdmin) {
+      localStorage.setItem('university', user.universityId);
+    }
   }
 
 }
