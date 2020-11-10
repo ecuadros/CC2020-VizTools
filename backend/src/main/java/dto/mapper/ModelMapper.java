@@ -58,6 +58,7 @@ public class ModelMapper {
         String fullName = item.getName() + ' ' + item.getLastName();
         itemDto.setName(fullName);
         itemDto.setToken(token);
+        itemDto.setEmail(item.getEmail());
         itemDto.setIsAdmin(false);
 
         for (Role role : item.getRoles()) {
@@ -70,6 +71,7 @@ public class ModelMapper {
 
         if (university != null) {
             itemDto.setUniversityId(university.getId());
+            itemDto.setUniversityName(university.getName());
         }
 
         return itemDto;
