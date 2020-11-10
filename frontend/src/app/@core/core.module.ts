@@ -14,7 +14,11 @@ import {
   UniversityService,
   UProgramService
 } from './services';
-import { AuthGuard, LandingdGuard } from './guards';
+import {
+  AdminGuard,
+  AuthGuard,
+  LandingGuard
+} from './guards';
 
 
 
@@ -53,7 +57,8 @@ export class CoreModule {
         UniversityService,
         UProgramService,
         AuthGuard,
-        LandingdGuard
+        LandingGuard,
+        AdminGuard
       ],
     };
   }
