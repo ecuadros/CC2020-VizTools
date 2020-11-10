@@ -3,43 +3,41 @@
 
 <ng-container *ngIf="!universitySection">
 
-  <form (ngSubmit)="onUserRegister()" [formGroup]="registerForm">
+  <form (ngSubmit)="onUserRegister()" [formGroup]="userForm">
 
     <div class="form-group">
       <div class="row">
         <div class="col">
           <label class="label" for="input-firstName">First Name:</label>
-          <input class="form-control" formControlName="firstName" name="firstName" id="input-firstname"
-            placeholder="First Name">
-          <ng-container *ngIf="regForm.firstName.invalid && regForm.firstName.touched">
-            <p class="error-message" *ngIf="regForm.firstName.errors?.required">
+          <input class="form-control" formControlName="firstName" id="input-firstname" placeholder="First Name">
+          <ng-container *ngIf="userControl.firstName.invalid && userControl.firstName.touched">
+            <p class="error-message" *ngIf="userControl.firstName.errors?.required">
               First name is required!
             </p>
           </ng-container>
         </div>
+
         <div class="col">
           <label class="label" for="input-lastName">Last Name:</label>
-          <input class="form-control" formControlName="lastName" name="lastName" id="input-lastName"
-            placeholder="Last Name">
-          <ng-container *ngIf="regForm.lastName.invalid && regForm.lastName.touched">
-            <p class="error-message" *ngIf="regForm.lastName.errors?.required">
+          <input class="form-control" formControlName="lastName" id="input-lastName" placeholder="Last Name">
+          <ng-container *ngIf="userControl.lastName.invalid && userControl.lastName.touched">
+            <p class="error-message" *ngIf="userControl.lastName.errors?.required">
               Last name is required!
             </p>
           </ng-container>
         </div>
       </div>
-
     </div>
 
     <div class="form-group">
       <label class="label" for="input-email">Email address:</label>
-      <input class="form-control" formControlName="email" name="email" id="input-email" pattern=".+@.+\..+"
+      <input class="form-control" formControlName="email" id="input-email" pattern=".+@.+\..+"
         placeholder="Email address">
-      <ng-container *ngIf="regForm.email.invalid && regForm.email.touched">
-        <p class="error-message" *ngIf="regForm.email.errors?.required">
+      <ng-container *ngIf="userControl.email.invalid && userControl.email.touched">
+        <p class="error-message" *ngIf="userControl.email.errors?.required">
           Email is required!
         </p>
-        <p class="error-message" *ngIf="regForm.email.errors?.pattern">
+        <p class="error-message" *ngIf="userControl.email.errors?.pattern">
           Email should be the real one!
         </p>
       </ng-container>
@@ -49,151 +47,149 @@
       <label class="label" for="input-password">Password:</label>
       <input class="form-control" formControlName="password" name="password" type="password" id="input-password"
         placeholder="Password">
-      <ng-container *ngIf="regForm.password.invalid && regForm.password.touched ">
-        <p class="error-message" *ngIf="regForm.password.errors?.required">
+      <ng-container *ngIf="userControl.password.invalid && userControl.password.touched ">
+        <p class="error-message" *ngIf="userControl.password.errors?.required">
           Password is required!
         </p>
-        <p class="error-message" *ngIf="regForm.password.errors?.minlength || regForm.password.errors?.maxlength">
+        <p class="error-message"
+          *ngIf="userControl.password.errors?.minlength || userControl.password.errors?.maxlength">
           Password should contains from 6 to 18 characters
         </p>
       </ng-container>
     </div>
 
-    <button class="btn btn-primary w-100" status="success" [disabled]="!registerForm.valid"
-      [class.btn-pulse]="submitted">
-      Register
+    <button class="btn btn-primary w-100" status="success" [disabled]="!userForm.valid" [class.btn-pulse]="submitted">
+      Next
     </button>
   </form>
+
   <section class="another-action" aria-label="Log In">
     Already have an account? <a class="text-link" routerLink="/auth/login">Log In</a>
   </section>
+
 </ng-container>
 
 <ng-container *ngIf="universitySection">
-  <ng-container *ngIf="universitySelection">
-    <form (ngSubmit)="onUniversitySelect()" [formGroup]="universitySelForm">
-      <div class="form-group">
-        <label class="label" for="input-us-occupation">Occupation / Position:</label>
-        <input class="form-control" formControlName="occupation" id="input-us-occupation"
-          placeholder="Occupation / Position">
-        <ng-container *ngIf="usForm.occupation.invalid && usForm.occupation.touched ">
-          <p class="error-message" *ngIf="usForm.occupation.errors?.required">
-            Occupation / Position is required!
-          </p>
-        </ng-container>
-      </div>
-      <div class="form-group">
-        <label class="label">Country:</label>
-        <dx-select-box displayExpr="name" placeholder="Choose country"
-          [items]="countryPD" [searchEnabled]="true" valueExpr="id" (onValueChanged)="onCountrySelected($event)"></dx-select-box>
-      </div>
-      <div class="form-group">
-        <label class="label">University:</label>
-        <dx-select-box formControlName="university" displayExpr="name" placeholder="Choose university"
-          [items]="universityPD" [searchEnabled]="true" valueExpr="id" [disabled]="!countrySelected"></dx-select-box>
-        <ng-container *ngIf="usForm.university.invalid && usForm.university.touched">
-          <p class="error-message" *ngIf="usForm.university.errors?.required">
-            University is required!
-          </p>
-        </ng-container>
-      </div>
+  <form (ngSubmit)="onCompleteRegister()" [formGroup]="infoForm">
+
+    <h3 class="subtitle">User Information</h3>
+
+    <div class="form-group">
+      <label class="label">Country:</label>
+      <dx-select-box displayExpr="name" formControlName="country" placeholder="Choose country" [items]="countryPD"
+        [searchEnabled]="true" valueExpr="id" (onValueChanged)="onCountrySelected($event)"></dx-select-box>
+    </div>
+
+    <div class="form-group">
+      <label class="label" for="input-city">City:</label>
+      <input class="form-control" formControlName="city" id="input-city">
+      <ng-container *ngIf="infoControl.city.invalid && infoControl.city.touched">
+        <p class="error-message" *ngIf="infoControl.city.errors?.required">
+          City is required!
+        </p>
+      </ng-container>
+    </div>
+
+    <div class="form-group">
+      <label class="label" for="input-state">State / Province / Region</label>
+      <input class="form-control" formControlName="state" id="input-state">
+      <ng-container *ngIf="infoControl.state.invalid && infoControl.state.touched">
+        <p class="error-message" *ngIf="infoControl.state.errors?.required">
+          State / Province / Region is required!
+        </p>
+      </ng-container>
+    </div>
+
+    <div class="form-group">
+      <label class="label" for="input-zipcode">Zip Code</label>
+      <input class="form-control" formControlName="zipCode" id="input-zipcode">
+      <ng-container *ngIf="infoControl.zipCode.invalid && infoControl.zipCode.touched">
+        <p class="error-message" *ngIf="infoControl.zipCode.errors?.required">
+          Zip Code is required!
+        </p>
+      </ng-container>
+    </div>
+
+    <div class="form-group">
+      <label class="label" for="input-phone">Phone number</label>
+      <input class="form-control" formControlName="phone" id="input-phone">
+      <ng-container *ngIf="infoControl.phone.invalid && infoControl.phone.touched">
+        <p class="error-message" *ngIf="infoControl.phone.errors?.required">
+          Phone number is required!
+        </p>
+      </ng-container>
+    </div>
+
+    <h3 class="subtitle">University</h3>
+    
+    <div class="form-group">
+      <label class="label">Country:</label>
+      <dx-select-box formControlName="countryUniversity" displayExpr="name" placeholder="Choose country" [items]="countryPD"
+        [searchEnabled]="true" valueExpr="id" (onValueChanged)="onCountryUniversitySelected($event)"></dx-select-box>
+    </div>
+
+    <div class="form-group">
+      <label class="label">University name:</label>
+      <dx-select-box formControlName="university" displayExpr="name" placeholder="Choose or register new university"
+        [items]="universityPD" [searchEnabled]="true" valueExpr="id" [acceptCustomValue]="true"
+        (onCustomItemCreating)="onNewUniversity($event)" [disabled]="!countrySelected"
+        (onValueChanged)="onUniversitySelected($event)"></dx-select-box>
+      <ng-container *ngIf="infoControl.university.invalid && infoControl.university.touched">
+        <p class="error-message" *ngIf="infoControl.university.errors?.required">
+          University is required!
+        </p>
+      </ng-container>
+    </div>
+
+    <div class="form-group">
+      <label class="label" for="input-occupation">Position:</label>
+      <input class="form-control" formControlName="occupation" id="input-occupation"
+        placeholder="Position">
+      <ng-container *ngIf="infoControl.occupation.invalid && infoControl.occupation.touched ">
+        <p class="error-message" *ngIf="infoControl.occupation.errors?.required">
+          Position is required!
+        </p>
+      </ng-container>
+    </div>
+
+    <div class="form-group">
       <div class="row">
         <div class="col">
-          <button class="btn btn-outline-secondary w-100" (click)="backForm()">
-            Back
-          </button>
+          <label class="label" for="input-domain">Domain:</label>
+          <input class="form-control" formControlName="domain" id="input-domain" placeholder="Domain">
+          <ng-container *ngIf="infoControl.domain.invalid && infoControl.domain.touched ">
+            <p class="error-message" *ngIf="infoControl.domain.errors?.required">
+              Domain is required!
+            </p>
+          </ng-container>
         </div>
+
         <div class="col">
-          <button class="btn btn-primary w-100" status="success" [disabled]="submitted || !universitySelForm.valid"
-            [class.btn-pulse]="submitted">
-            Register
-          </button>
+          <label class="label" for="input-uacronym">Acronym:</label>
+          <input class="form-control" formControlName="acronym" name="acronym" id="input-uacronym"
+            placeholder="Acronym">
+          <ng-container *ngIf="infoControl.acronym.invalid && infoControl.acronym.touched ">
+            <p class="error-message" *ngIf="infoControl.acronym.errors?.required">
+              Acronym is required!
+            </p>
+          </ng-container>
         </div>
       </div>
-    </form>
-  </ng-container>
 
-  <ng-container *ngIf="!universitySelection">
-    <form (ngSubmit)="onUniversityRegister()" [formGroup]="universityRegForm">
+    </div>
 
-      <div class="form-group">
-        <label class="label" for="input-ur-name">University name:</label>
-        <input class="form-control" formControlName="name" id="input-ur-uname" placeholder="University name">
-        <ng-container *ngIf="urForm.name.invalid && urForm.name.touched">
-          <p class="error-message" *ngIf="urForm.name.errors?.required">
-            University name is required!
-          </p>
-        </ng-container>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-outline-secondary w-100" (click)="backForm()">
+          Back
+        </button>
       </div>
-
-      <div class="form-group">
-        <div class="row">
-          <div class="col">
-            <label class="label" for="input-ur-occupation">Occupation / Position:</label>
-            <input class="form-control" formControlName="occupation" id="input-ur-occupation"
-              placeholder="Occupation / Position">
-            <ng-container *ngIf="urForm.occupation.invalid && urForm.occupation.touched ">
-              <p class="error-message" *ngIf="urForm.occupation.errors?.required">
-                Occupation / Position is required!
-              </p>
-            </ng-container>
-          </div>
-
-          <div class="col">
-            <label class="label" for="input-uacronym">Acronym:</label>
-            <input class="form-control" formControlName="acronym" name="acronym" id="input-uacronym"
-              placeholder="Acronym">
-            <ng-container *ngIf="urForm.acronym.invalid && urForm.acronym.touched ">
-              <p class="error-message" *ngIf="urForm.acronym.errors?.required">
-                Acronym is required!
-              </p>
-            </ng-container>
-          </div>
-        </div>
-
+      <div class="col">
+        <button class="btn btn-primary w-100" status="success" [disabled]="submitted || !infoForm.valid"
+          [class.btn-pulse]="submitted" type="submit">
+          Register
+        </button>
       </div>
-
-      <div class="form-group">
-        <label class="label" for="input-udomain">Domain:</label>
-        <input class="form-control" formControlName="domain" name="domain" id="input-udomain" placeholder="Domain">
-        <ng-container *ngIf="urForm.domain.invalid && urForm.domain.touched ">
-          <p class="error-message" *ngIf="urForm.domain.errors?.required">
-            Domain is required!
-          </p>
-        </ng-container>
-      </div>
-
-      <div class="form-group">
-        <label class="label" for="input-ucountry">Country:</label>
-        <dx-select-box formControlName="country" [items]="countryPD" [searchEnabled]="true" displayExpr="name"
-          placeholder="Choose country" valueExpr="id"></dx-select-box>
-        <ng-container *ngIf="urForm.name.invalid && urForm.name.touched">
-          <p class="error-message" *ngIf="urForm.name.errors?.required">
-            Country is required!
-          </p>
-        </ng-container>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <button class="btn btn-outline-secondary w-100" (click)="backForm()">
-            Back
-          </button>
-        </div>
-        <div class="col">
-          <button class="btn btn-primary w-100" status="success" [disabled]="submitted || !universityRegForm.valid"
-            [class.btn-pulse]="submitted">
-            Register
-          </button>
-        </div>
-      </div>
-    </form>
-  </ng-container>
-
-  <section class="another-action">
-    <a class="text-link" (click)="changeUniversityView()">
-      {{universitySelection? "Can't find your university?":"University already registered?"}}
-    </a>
-  </section>
-
+    </div>
+  </form>
 </ng-container>
