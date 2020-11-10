@@ -1,0 +1,85 @@
+<div style="margin: 0 auto; width: 500px;">
+<dx-toolbar>
+  <dxi-item location="after" widget="dxButton" locateInMenu="never">
+    <div *dxTemplate>
+      <div class='toolbar-label'><b>Program</b></div>
+    </div>
+  </dxi-item>
+  <dxi-item location="after" widget="dxButton" locateInMenu="never">
+    <div *dxTemplate>
+      <dx-select-box id="selectbox" [items]="uProgramPD" displayExpr="name" (onValueChanged)="onProgramSelected($event)"
+        style="width: 250px">
+      </dx-select-box>
+    </div>
+  </dxi-item>
+  <dxi-item location="after" widget="dxButton" locateInMenu="never" [options]="addProgramButton">
+  </dxi-item>
+</dx-toolbar>
+
+<dx-data-grid id="gridContainer" [dataSource]="chartDS" [showColumnLines]="true" [showRowLines]="true"
+  [showBorders]="true" [height]="500" [rowAlternationEnabled]="true" [columnAutoWidth]="true"
+  (onRowClick)="onRowClick($event)">
+
+
+  <dxo-editing [allowUpdating]="true" [allowAdding]="false" [allowDeleting]="false" [selectTextOnEditStart]="true"
+    [useIcons]="true" mode="cell">
+  </dxo-editing>
+
+  <dxo-grouping [allowCollapsing]="false" [contextMenuEnabled]="true" expandMode="rowClick"></dxo-grouping>
+  <dxo-group-panel [visible]="false" emptyPanelText="Relative Weights of Computing Knowledge Areas"></dxo-group-panel>
+
+  <dxi-column dataField="id" [allowEditing]="false" [visible]="false"></dxi-column>
+
+  <dxi-column dataField="dkagTitle" [allowEditing]="false" [groupIndex]="0" caption="" [sortIndex]="0" sortOrder="asc"
+    [calculateCellValue]="onAddDKAGPrefix">
+  </dxi-column>
+
+  <dxi-column dataField="dkaIndex" [sortIndex]="1" sortOrder="asc" [visible]="false">
+  </dxi-column>
+
+  <dxi-column dataField="dkaIndex" caption="Index" [width]="60" [allowEditing]="false" [visible]="true"
+    [calculateCellValue]="onAddDKAPrefix">
+  </dxi-column>
+
+  <dxi-column dataField="dkaTitle" caption="Discipline Knowledge Area" [allowEditing]="false" [visible]="true">
+  </dxi-column>
+
+  <dxi-column caption="Value">
+    <dxi-column alignment="center" dataField="value" caption="(1-5)" [width]="80" [allowEditing]="true" [visible]="true">
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+  </dxi-column>
+
+  <dxo-search-panel [visible]="false"></dxo-search-panel>
+  <dxo-grouping #expand [autoExpandAll]="true"></dxo-grouping>
+  <dxo-paging [enabled]="false"></dxo-paging>
+  <dxo-scrolling mode="virtual" columnRenderingMode="virtual"></dxo-scrolling>
+</dx-data-grid>
+</div>
+
+
+<dx-popup show-title="true" title="New Program" [(visible)]="isVisibleProgramPopup" [dragEnabled]="false"
+  [closeOnOutsideClick]="true" [width]="400" [height]="350">
+  <div *dxTemplate="let data of 'content'">
+    <dx-form [formData]="programForm" labelLocation="top">
+
+      <dxi-item dataField="name">
+        <dxi-validation-rule type="required" message="Name is required"></dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item dataField="acronym">
+        <dxi-validation-rule type="required" message="Acronym is required"></dxi-validation-rule>
+      </dxi-item>
+
+      <dxi-item dataField="programId" [label]="{text: 'According to CC2020 this program is more similar to'}">
+        <dx-select-box [items]="cProgramPD" displayExpr="name" valueExpr="id">
+        </dx-select-box>
+        <dxi-validation-rule type="required" message="Program Equivalent is required"></dxi-validation-rule>
+      </dxi-item>
+
+    </dx-form>
+    <dx-button stylingMode="contained" text="Submit" type="success" [width]="120" style="margin-top: 10px;"
+      (onClick)="onSubmitProgram($event)" [useSubmitBehavior]="true">
+    </dx-button>
+  </div>
+</dx-popup>
