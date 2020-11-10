@@ -5,13 +5,15 @@ import { DevExtremeModule } from 'devextreme-angular';
 import { AdminRoutingModule } from './admin-routing.module';
 import { CoreModule } from '../@core/core.module';
 import { LandingComponent } from './landing/landing.component';
+import { WeightComponent } from './weight/weight.component';
 
 
 
 @NgModule({
   declarations: [
     AdminComponent,
-    LandingComponent
+    LandingComponent,
+    WeightComponent
   ],
   imports: [
     CommonModule,

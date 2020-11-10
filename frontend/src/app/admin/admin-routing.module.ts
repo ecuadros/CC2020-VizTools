@@ -2,6 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { AdminComponent } from './admin.component';
+import { WeightComponent } from './weight/weight.component';
 import { AdminGuard } from '../@core/guards';
 
 const routes: Routes = [{
@@ -11,7 +12,7 @@ const routes: Routes = [{
   children: [
     {
       path: '',
-      component: LandingComponent,
+      component: WeightComponent,
     }
   ],
 }];
