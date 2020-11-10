@@ -1,0 +1,24 @@
+.user-action {
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+
+.user-info p {
+    margin: 0;
+    text-align: right;
+}
+
+.user-info .university {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.user-info .email {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.dropdown-menu a{
+    cursor: pointer;
+}

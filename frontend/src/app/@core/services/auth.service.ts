@@ -35,20 +35,52 @@ export class AuthService {
       ));
   }
 
+  isEmailRegistered(email: string) {
+
+    return this.http.get(AuthService.path + 'check/' + email).toPromise();
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('admin');
     localStorage.removeItem('name');
+    localStorage.removeItem('email');
     localStorage.removeItem('id');
-    localStorage.removeItem('university')
+    localStorage.removeItem('universityId')
+    localStorage.removeItem('universityName')
   }
 
   get token(): string {
     return localStorage.getItem('token')
   }
 
+  get email(): string {
+    return localStorage.getItem('email')
+  }
+
   get admin(): string {
     return localStorage.getItem('admin')
+  }
+
+  get userName(): string {
+    if (this.isAuthenticated()) {
+      return localStorage.getItem('name')
+    }
+    return "";
+  }
+
+  get universityId(): number {
+    if (this.isAuthenticated() && !this.isAdmin()) {
+      return +localStorage.getItem('universityId')
+    }
+    return -1;
+  }
+
+  get universityName(): string {
+    if (this.isAuthenticated() && !this.isAdmin()) {
+      return localStorage.getItem('universityName')
+    }
+    return "";
   }
 
   isAuthenticated(): boolean {
@@ -68,10 +100,12 @@ export class AuthService {
     localStorage.setItem('token', user.token);
     localStorage.setItem('admin', user.isAdmin);
     localStorage.setItem('name', user.name);
+    localStorage.setItem('email', user.email);
     localStorage.setItem('id', user.id);
 
     if (!user.isAdmin) {
-      localStorage.setItem('university', user.universityId);
+      localStorage.setItem('universityId', user.universityId);
+      localStorage.setItem('universityName', user.universityName);
     }
   }
 

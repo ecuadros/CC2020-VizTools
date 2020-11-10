@@ -13,10 +13,17 @@ export class HeaderComponent implements OnInit {
 
   isAuthenticated: boolean = false;
 
+  userName = "";
+  universityName = "";
+  email = "";
+
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
+    this.universityName = this.authService.universityName;
+    this.userName = this.authService.userName;
+    this.email = this.authService.email;
   }
 
   logout(): void {
