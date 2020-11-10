@@ -165,11 +165,11 @@ public class ModelMapper {
 
         itemDto.setDkaId(dka.getId());
 
-        String dkaIndex = dkag.getIndex().toString() + '.' + dka.getIndex().toString();
-        itemDto.setDkaTitle(dkaIndex  + ". " + dka.getName());
+        itemDto.setDkaTitle(dka.getName());
+        itemDto.setDkagTitle(dkag.getName());
 
-        String dkagIndex = dkag.getIndex().toString();
-        itemDto.setDkagTitle(dkagIndex  + ". " + dkag.getName());
+        itemDto.setDkaIndex(dka.getIndex());
+        itemDto.setDkagIndex(dkag.getIndex());
 
         return itemDto;
     }

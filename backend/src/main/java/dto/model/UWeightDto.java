@@ -23,4 +23,8 @@ public class UWeightDto {
 
     private Long dkaId;
 
+    private Long dkaIndex;
+
+    private Long dkagIndex;
+
 }
