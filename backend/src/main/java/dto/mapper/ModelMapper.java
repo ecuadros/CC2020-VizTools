@@ -10,7 +10,6 @@ public class ModelMapper {
         itemDto.setId(item.getId());
         itemDto.setName(item.getName());
         itemDto.setLastName(item.getLastName());
-        itemDto.setOccupation(item.getOccupation());
         itemDto.setIsAdmin(false);
         
         itemDto.setEmail(item.getEmail());
@@ -24,6 +23,30 @@ public class ModelMapper {
         
         if (item.getUniversity() != null) {
             itemDto.setUniversityId(item.getUniversity().getId());
+        }
+
+        if (item.getUserInfo() != null) {
+            itemDto.setUserInfoId(item.getUserInfo().getId());
+        }
+        
+        return itemDto;
+    }
+
+    public static UserInfoDto toUserInfoDto(UserInfo item) {
+        UserInfoDto itemDto = new UserInfoDto();
+        itemDto.setId(item.getId());
+        itemDto.setOccupation(item.getOccupation());
+        itemDto.setPhone(item.getPhone());
+        
+        itemDto.setCity(item.getCity());
+        itemDto.setState(item.getState());
+        itemDto.setZipCode(item.getZipCode());
+
+        itemDto.setTelegram(item.getTelegram());
+        itemDto.setWhatsApp(item.getWhatsApp());
+        
+        if (item.getUser() != null) {
+            itemDto.setUserId(item.getUser().getId());
         }
         
         return itemDto;

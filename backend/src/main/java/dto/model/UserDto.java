@@ -20,10 +20,10 @@ public class UserDto {
 
     private String password;
 
-    private String occupation;
-
     private Boolean isAdmin;
 
     private Long universityId;
+
+    private Long userInfoId;
 
 }
