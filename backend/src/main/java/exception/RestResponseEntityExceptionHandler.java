@@ -74,6 +74,20 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UniversityNotFoundException.class)
+    public final String UniversityNotFoundHandler(UniversityNotFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(UniversityConflictException.class)
+    public final String UniversityConflictHandler(UniversityConflictException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(UniversityNullException.class)
     public final String UniversityNullHandler(UniversityNullException ex) {

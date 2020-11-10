@@ -23,4 +23,13 @@ public class UniversityException {
         }
     }
 
+    public static class UniversityConflictException extends RuntimeException {
+
+        private static final long serialVersionUID = 1L;
+        
+        public UniversityConflictException(String university, String country) {
+            super("This university (" + university + ") is already registered in this country (" + country + ")");
+        }
+    }
+
 }

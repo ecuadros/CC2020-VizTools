@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import dto.mapper.ModelMapper;
 import dto.model.UniversityDto;
-import exception.UniversityException.UniversityNotFoundException;
+import exception.UniversityException.*;
 import exception.CountryException.CountryNullException;
 import model.Country;
 import model.University;
@@ -59,6 +59,12 @@ public class UniversityService {
         
         Country country = countryService.findById(itemDto.getCountryId());
         item.setCountry(country);
+
+        Optional<University> uniqueUniversity = repository.findByNameAndCountryId(item.getName(), country.getId());
+
+        if (uniqueUniversity.isPresent()) {
+            throw new UniversityConflictException(item.getName(), country.getNameEn());
+        }
 
         return ModelMapper.toUniversityDto(repository.save(item));
     }
