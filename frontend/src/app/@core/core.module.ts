@@ -6,8 +6,13 @@ import { RouterModule } from '@angular/router';
 import {
   AlertService,
   AuthService,
+  ChartService,
   CountryService,
-  UniversityService
+  DKAGService,
+  DKAService,
+  ProgramService,
+  UniversityService,
+  UProgramService
 } from './services';
 import { AuthGuard, LandingdGuard } from './guards';
 
@@ -40,8 +45,13 @@ export class CoreModule {
       providers: [
         AlertService,
         AuthService,
+        ChartService,
         CountryService,
+        DKAGService,
+        DKAService,
+        ProgramService,
         UniversityService,
+        UProgramService,
         AuthGuard,
         LandingdGuard
       ],
