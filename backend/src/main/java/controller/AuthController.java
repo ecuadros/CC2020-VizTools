@@ -48,16 +48,22 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody RegisterDto registerReq) {
 
         UserDto userDto = registerReq.getUser();
+        UserInfoDto userInfoDto = registerReq.getUserInfo();
         UniversityDto universityDto = registerReq.getUniversity();
-        
-        if (!registerReq.getIsUniversityRegister() && universityDto != null) {
+
+        if (universityDto.getId() == -1) {
             universityDto = universityService.create(universityDto);
-            userDto.setUniversityId(universityDto.getId());
+        } else {
+            universityDto = universityService.update(universityDto, universityDto.getId());
         }
 
+        userInfoDto = userInfoService.create(userInfoDto);
+
+        userDto.setUniversityId(universityDto.getId());
         userDto.setIsAdmin(false);
-        userDto = userService.create(userDto);
-        
+        userDto.setUserInfoId(userInfoDto.getId());
+        userService.create(userDto);
+
         return new ResponseEntity<>(generateToken(userDto.getEmail()), HttpStatus.OK);
     }
 

@@ -12,9 +12,9 @@ import model.User;
 public class RegisterDto {
     
     private UserDto user;
+
+    private UserInfoDto userInfo;
     
     private UniversityDto university;
-
-    private Boolean isUniversityRegister;
 
 }
