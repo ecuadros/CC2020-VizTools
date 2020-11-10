@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import dto.mapper.ModelMapper;
 import dto.model.UserDto;
+import dto.model.UserInfoDto;
 import exception.UserException.*;
 import exception.UniversityException.*;
 import model.*;
@@ -32,6 +33,9 @@ public class UserService {
 
     @Autowired
     private UniversityService universityService;
+
+    @Autowired
+    private UserInfoService userInfoService;
 
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
@@ -66,11 +70,20 @@ public class UserService {
         return items;
     }
 
+    public Boolean isEmailRegistered(String email) {
+        Optional<User> itemOp = repository.findByEmail(email);
+
+        if (itemOp.isPresent()) {
+            throw new UserConflictException(email);
+        }
+
+        return true;
+    }
+
     public UserDto create(UserDto itemDto) {
         User item = new User();
         item.setName(itemDto.getName());
         item.setLastName(itemDto.getLastName());
-        item.setOccupation(itemDto.getOccupation());
         
         Optional<User> itemOp = repository.findByEmail(itemDto.getEmail());
 
@@ -97,6 +110,11 @@ public class UserService {
         
         University university = universityService.findById(itemDto.getUniversityId());
         item.setUniversity(university);
+
+        if (itemDto.getUserInfoId() != null) {
+            UserInfo userInfo = userInfoService.findById(itemDto.getUserInfoId());
+            item.setUserInfo(userInfo);
+        }
 
         return ModelMapper.toUserDto(repository.save(item));
     }

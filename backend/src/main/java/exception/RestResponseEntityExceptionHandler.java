@@ -26,6 +26,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UserInfoNotFoundException.class)
+    public final String UserInfoNotFoundHandler(UserInfoNotFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(RoleNotFoundException.class)
     public final String RoleNotFoundHandler(RoleNotFoundException ex) {
         return ex.getMessage();
