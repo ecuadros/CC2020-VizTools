@@ -1,7 +1,6 @@
 package controller;
 
-import service.UniversityService;
-import service.UserService;
+import service.*;
 import security.JwtTokenUtil;
 import model.*;
 
@@ -14,11 +13,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import dto.mapper.ModelMapper;
-import dto.model.AuthTokenDto;
-import dto.model.LoginDto;
-import dto.model.RegisterDto;
-import dto.model.UniversityDto;
-import dto.model.UserDto;
+import dto.model.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -33,6 +28,9 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserInfoService userInfoService;
 
     @Autowired
     private UniversityService universityService;
@@ -61,6 +59,11 @@ public class AuthController {
         userDto = userService.create(userDto);
         
         return new ResponseEntity<>(generateToken(userDto.getEmail()), HttpStatus.OK);
+    }
+
+    @GetMapping("/check/{email}")
+    public ResponseEntity<?> isEmailRegistered(@PathVariable String email) {
+        return new ResponseEntity<>(userService.isEmailRegistered(email), HttpStatus.OK);
     }
 
     public AuthTokenDto generateToken(String email) {
