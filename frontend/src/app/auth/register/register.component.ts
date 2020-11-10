@@ -110,7 +110,7 @@ export class RegisterComponent implements OnInit {
         name: university.name,
         acronym: this.infoControl.acronym.value,
         url: this.infoControl.domain.value,
-        countryId: this.infoControl.country.value,
+        countryId: this.infoControl.countryUniversity.value,
       },
     }
     this.authService.register(form).subscribe(
