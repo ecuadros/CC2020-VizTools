@@ -32,4 +32,7 @@ public class Country {
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL)
     private Set<University> universities;
 
+    @OneToOne(mappedBy = "country")
+    private UserInfo userInfo;
+
 }

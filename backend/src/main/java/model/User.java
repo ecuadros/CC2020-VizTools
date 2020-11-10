@@ -39,8 +39,6 @@ public class User {
 	@NotNull
 	private String lastName;
 
-	private String occupation;
-
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_roles", 
 		joinColumns = @JoinColumn(name = "user_id"), 
@@ -50,5 +48,9 @@ public class User {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "university_id", nullable = true)
 	private University university;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_info_id", referencedColumnName = "id")
+	private UserInfo userInfo;
 
 }
