@@ -17,7 +17,8 @@ import {
 import {
   AdminGuard,
   AuthGuard,
-  LandingGuard
+  LandingGuard,
+  UserGuard
 } from './guards';
 
 
@@ -58,7 +59,8 @@ export class CoreModule {
         UProgramService,
         AuthGuard,
         LandingGuard,
-        AdminGuard
+        AdminGuard,
+        UserGuard
       ],
     };
   }
