@@ -80,7 +80,7 @@ public class CountryService {
 
     public void delete(Long id) {
         Country item = findById(id);
-        repository.delete(item);;
+        repository.delete(item);
     }
 
 }

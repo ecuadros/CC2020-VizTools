@@ -80,7 +80,7 @@ public class ProgramService {
 
     public void delete(Long id) {
         Program item = findById(id);
-        repository.delete(item);;
+        repository.delete(item);
     }
 
 }

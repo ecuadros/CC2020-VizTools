@@ -110,7 +110,7 @@ public class WeightService {
 
     public void delete(Long id) {
         Weight item = findById(id);
-        repository.delete(item);;
+        repository.delete(item);
     }
 
 }

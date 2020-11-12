@@ -119,7 +119,7 @@ public class UniversityService {
 
     public void delete(Long id) {
         University item = findById(id);
-        repository.delete(item);;
+        repository.delete(item);
     }
 
 }

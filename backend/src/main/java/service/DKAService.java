@@ -94,6 +94,6 @@ public class DKAService {
 
     public void delete(Long id) {
         DKA item = findById(id);
-        repository.delete(item);;
+        repository.delete(item);
     }
 }

@@ -113,7 +113,7 @@ public class UProgramService {
 
     public void delete(Long id) {
         UProgram item = findById(id);
-        repository.delete(item);;
+        repository.delete(item);
     }
 
 }

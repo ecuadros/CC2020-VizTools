@@ -104,7 +104,7 @@ public class UWeightService {
 
     public void delete(Long id) {
         UWeight item = findById(id);
-        repository.delete(item);;
+        repository.delete(item);
     }
 
 }
