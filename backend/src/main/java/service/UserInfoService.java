@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import dto.mapper.ModelMapper;
 import dto.model.UserInfoDto;
 import exception.UserException.*;
+import exception.CountryException.*;
 import model.*;
 import repository.UserInfoRepository;
 
@@ -24,6 +25,9 @@ public class UserInfoService {
 
     @Autowired
     private UserInfoRepository repository;
+
+    @Autowired
+    private CountryService countryService;
 
     public UserInfo findById(Long id) {
         Optional<UserInfo> itemOp = repository.findById(id);
