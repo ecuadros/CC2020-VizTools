@@ -28,11 +28,11 @@ public class Weight {
     private Integer max;
 
     @ManyToOne
-    @JoinColumn (name = "program_id", nullable = false)
+    @JoinColumn (name = "program_id", nullable = true)
     private Program program;
 
     @ManyToOne
-    @JoinColumn (name = "dka_id", nullable = false)
+    @JoinColumn (name = "dka_id", nullable = true)
     private DKA dka;
 
 }
