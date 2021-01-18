@@ -1,11 +1,6 @@
 package model;
 
-import java.util.Set;
-
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import org.hibernate.annotations.NaturalId;
 
 import lombok.*;
 import lombok.experimental.Accessors;
