@@ -29,6 +29,8 @@ public class UProgram {
 
     private String acronym;
 
+    private Long programId;
+
     @ManyToOne
     @JoinColumn (name = "university_id", nullable = false)
     private University university;
