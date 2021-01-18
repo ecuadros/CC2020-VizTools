@@ -10,10 +10,11 @@
 	</parent>
 	
 	<groupId>acm-ieee</groupId>
-	<artifactId>computing-curricula</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>computing-curricula</name>
-	<description>ACM/IEEE - Tool</description>
+	<artifactId>viztools</artifactId>
+	<version>1.0</version>
+	<name>CC2020-VizTools</name>
+	<description>Computing Curricula Vizualization Tools</description>
+	<packaging>war</packaging>
 
 	<properties>
 		<java.version>11</java.version>
