@@ -39,6 +39,9 @@ public class User {
 	@NotNull
 	private String lastName;
 
+	@NotNull
+	private Boolean enabled;
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_roles", 
 		joinColumns = @JoinColumn(name = "user_id"), 
