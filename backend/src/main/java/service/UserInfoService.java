@@ -34,7 +34,7 @@ public class UserInfoService {
         return itemOp.get();
     }
 
-    public UserInfo findOneByUser(Long userId){
+    public UserInfo findByUser(Long userId){
         Optional<UserInfo> itemOp = repository.findByUserId(userId);
 
         if (!itemOp.isPresent()) {
