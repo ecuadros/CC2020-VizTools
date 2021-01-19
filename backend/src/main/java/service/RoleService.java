@@ -30,7 +30,7 @@ public class RoleService {
         return items;
     }
 
-    public Role findOneByName(RoleName roleName){
+    public Role findByName(RoleName roleName){
         return repository.findByName(roleName);
     }    
 
@@ -45,4 +45,5 @@ public class RoleService {
     public void delete(Long id){
         repository.delete(read(id));
     }
+
 }
