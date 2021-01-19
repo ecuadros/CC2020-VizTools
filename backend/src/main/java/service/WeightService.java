@@ -39,14 +39,16 @@ public class WeightService {
         return itemOp.get();
     }
 
-    public List<WeightDto> findAll() {
-        List<WeightDto> items = new ArrayList<>();
+    public Weight findByDkaAndProgram(Long dkaId, Long programId) {
+        Optional<Weight> itemOp;
+        
+        itemOp = repository.findByDkaIdAndProgramId(dkaId, programId);
 
-        for (Weight item : repository.findAll()) {
-            items.add(ModelMapper.toWeightDto(item));
+        if (!itemOp.isPresent()) {
+            throw new WeightNotFoundException(dkaId, programId);
         }
 
-        return items;
+        return itemOp.get();
     }
 
     public List<WeightDto> createChart(Long programId) {
@@ -108,8 +110,16 @@ public class WeightService {
         return ModelMapper.toWeightDto(repository.save(item));
     }
 
+    public WeightDto update(Long dkaId, Long programId, WeightDto newItem) {
+        Weight item = findByDkaAndProgram(dkaId, programId);
+        return update(item.getId(), newItem);
+    }
+
     public void delete(Long id) {
         Weight item = findById(id);
+        item.setDka(null);
+        item.setProgram(null);
+        repository.save(item);
         repository.delete(item);
     }
 
