@@ -46,6 +46,20 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ResponseBody
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(UserUnauthorizedException.class)
+    public final String UserUnauthorizedHandler(UserUnauthorizedException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(UserNotActivatedException.class)
+    public final String UserNotActivatedHandler(UserNotActivatedException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ProgramNotFoundException.class)
     public final String ProgramNotFoundHandler(ProgramNotFoundException ex) {
