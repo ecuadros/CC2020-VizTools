@@ -39,7 +39,7 @@ public class DKAGController {
     public ResponseEntity<?> update(
             @PathVariable Long id,
             @RequestBody DKAGDto input) {
-        return new ResponseEntity<>(service.update(input, id), HttpStatus.OK);
+        return new ResponseEntity<>(service.update(id, input), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
