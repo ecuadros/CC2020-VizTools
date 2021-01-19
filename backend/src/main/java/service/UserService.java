@@ -10,11 +10,13 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import dto.mapper.ModelMapper;
 import dto.model.UserDto;
-import dto.model.UserInfoDto;
 import exception.UserException.*;
 import exception.UniversityException.*;
 import model.*;
@@ -40,6 +42,9 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     public User findById(Long id) {
         Optional<User> itemOp = repository.findById(id);
 
@@ -54,7 +59,7 @@ public class UserService {
         Optional<User> itemOp = repository.findByEmail(email);
 
         if (!itemOp.isPresent()) {
-            throw new UserNotFoundException(-1L);
+            throw new UserNotFoundException(email);
         }
 
         return itemOp.get();
@@ -80,16 +85,34 @@ public class UserService {
         return true;
     }
 
+    public void authenticateUser(String email, String password) {
+        try {
+            authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        } catch (AuthenticationException e) {
+            throw new UserUnauthorizedException();
+        }
+
+        User user = findByEmail(email);
+        
+        if (!user.getEnabled()) {
+            throw new UserNotActivatedException(email);    
+        }
+    }
+
+    public Boolean activateUser(Long id) {
+        User item = findById(id);
+        item.setEnabled(true);
+        return repository.save(item).getEnabled();
+    }
+
     public UserDto create(UserDto itemDto) {
         User item = new User();
-        item.setName(itemDto.getName());
+        item.setFirstName(itemDto.getFirstName());
         item.setLastName(itemDto.getLastName());
+        item.setEnabled(false);
         
-        Optional<User> itemOp = repository.findByEmail(itemDto.getEmail());
-
-        if (itemOp.isPresent()) {
-            throw new UserConflictException(itemDto.getEmail());
-        }
+        isEmailRegistered(itemDto.getEmail());
         
         item.setEmail(itemDto.getEmail());
         item.setPassword(bcryptEncoder.encode(itemDto.getPassword()));
@@ -137,8 +160,8 @@ public class UserService {
     public UserDto update(Long id, UserDto newItem) {
         User item = findById(id);
 
-        if (newItem.getName() != null) {
-            item.setName(newItem.getName());
+        if (newItem.getFirstName() != null) {
+            item.setFirstName(newItem.getFirstName());
         }
 
         if (newItem.getLastName() != null) {
