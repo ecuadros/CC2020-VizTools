@@ -4,7 +4,7 @@ import service.UniversityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import dto.model.UniversityDto;
@@ -24,7 +24,7 @@ public class UniversityController {
         return service.readAll();
     }
 
-    @PostMapping(value = "/")
+    @PostMapping("/")
     public ResponseEntity<?> create(
             @RequestBody UniversityDto input){
         return new ResponseEntity<>(service.create(input), HttpStatus.OK);
@@ -47,6 +47,7 @@ public class UniversityController {
         return new ResponseEntity<>(service.update(input, id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         service.delete(id);

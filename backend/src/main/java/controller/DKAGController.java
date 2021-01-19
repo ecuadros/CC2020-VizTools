@@ -4,7 +4,7 @@ import service.DKAGService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import dto.model.DKAGDto;
@@ -24,7 +24,8 @@ public class DKAGController {
         return service.readAll();
     }
 
-    @PostMapping(value = "/")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/")
     public ResponseEntity<?> create(
             @RequestBody DKAGDto input){
         return new ResponseEntity<>(service.create(input), HttpStatus.OK);
@@ -35,6 +36,7 @@ public class DKAGController {
         return new ResponseEntity<>(service.read(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable Long id,
@@ -42,6 +44,7 @@ public class DKAGController {
         return new ResponseEntity<>(service.update(id, input), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         service.delete(id);
