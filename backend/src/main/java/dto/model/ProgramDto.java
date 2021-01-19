@@ -1,5 +1,7 @@
 package dto.model;
 
+import java.util.List;
+
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -17,5 +19,7 @@ public class ProgramDto {
     private String nativeName;
 
     private String acronym;
+
+    private List<WeightDto> weights;
 
 }

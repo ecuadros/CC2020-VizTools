@@ -20,4 +20,6 @@ public class UProgramDto {
 
     private Long universityId;
 
+    private List<UWeightDto> weights;
+
 }
