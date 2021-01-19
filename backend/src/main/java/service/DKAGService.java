@@ -64,7 +64,7 @@ public class DKAGService {
         return items;
     }
 
-    public DKAGDto update(DKAGDto newItem, Long id) {
+    public DKAGDto update(Long id, DKAGDto newItem) {
         DKAG item = findById(id);
 
         if (newItem.getName() != null) {

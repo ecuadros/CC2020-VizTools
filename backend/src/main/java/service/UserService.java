@@ -134,7 +134,7 @@ public class UserService {
         return items;
     }
 
-    public UserDto update(UserDto newItem, Long id) {
+    public UserDto update(Long id, UserDto newItem) {
         User item = findById(id);
 
         if (newItem.getName() != null) {

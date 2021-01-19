@@ -64,7 +64,7 @@ public class ProgramService {
         return items;
     }
 
-    public ProgramDto update(ProgramDto newItem, Long id) {
+    public ProgramDto update(Long id, ProgramDto newItem) {
         Program item = findById(id);
 
         if (newItem.getName() != null) {

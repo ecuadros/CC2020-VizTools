@@ -64,7 +64,7 @@ public class CountryService {
         return items;
     }
 
-    public CountryDto update(CountryDto newItem, Long id) {
+    public CountryDto update(Long id, CountryDto newItem) {
         Country item = findById(id);
 
         if (newItem.getName() != null) {

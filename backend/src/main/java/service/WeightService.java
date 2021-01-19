@@ -94,7 +94,7 @@ public class WeightService {
         return ModelMapper.toWeightDto(item);
     }
 
-    public WeightDto update(WeightDto newItem, Long id) {
+    public WeightDto update(Long id, WeightDto newItem) {
         Weight item = findById(id);
 
         if (newItem.getMin() != null) {

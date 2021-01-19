@@ -73,7 +73,7 @@ public class DKAService {
         return items;
     }
 
-    public DKADto update(DKADto newItem, Long id) {
+    public DKADto update(Long id, DKADto newItem) {
         DKA item = findById(id);
 
         if (newItem.getName() != null) {
