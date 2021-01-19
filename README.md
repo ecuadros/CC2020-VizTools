@@ -14,18 +14,25 @@ Computing Curricula Vizualization Tools
 
 ## Constant
 
-Set encryption key in [backend constants](https://github.com/ecuadros/CC2020-VizTools/blob/master/backend/src/main/java/security/Constants.java#L5)
+Set encryption key in [backend constants](https://github.com/ecuadros/CC2020-VizTools/blob/master/backend/src/main/java/security/Constants.java#L6)
 
 ```java
 public static final String SIGNING_KEY = **key**;
 ```
 
-Set PostgreSQL credentials in [application.properties](https://github.com/ecuadros/CC2020-VizTools/blob/master/backend/src/main/esources/application.properties#L6-L8)
+Set PostgreSQL credentials in [application.properties](https://github.com/ecuadros/CC2020-VizTools/blob/master/backend/src/main/esources/application.properties#L7-L9)
 
 ```properties
 spring.datasource.url = **url**
 spring.datasource.username = **username**
 spring.datasource.password = **password**
+```
+
+Set email credentials in [application.properties](https://github.com/ecuadros/CC2020-VizTools/blob/master/backend/src/main/esources/application.properties#L46-L47)
+
+```properties
+spring.mail.username = **email**
+spring.mail.password = **password**
 ```
 
 ## Test
