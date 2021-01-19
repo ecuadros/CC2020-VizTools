@@ -66,6 +66,30 @@ public class AuthController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/activate-account/{token}")
+    public ResponseEntity<?> activateAccount(@PathVariable String token) {
+        verificationTokenService.activateAccount(token);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/resend-email/{email}")
+    public ResponseEntity<?> resendEmail(@PathVariable String email) {
+        User user = userService.findByEmail(email);
+
+        if (user.getEnabled()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        if (user.getVerificationToken() != null) {
+            verificationTokenService.delete(user.getVerificationToken().getId());
+        }
+
+        VerificationToken verificationToken = verificationTokenService.create(user.getId());
+
+        emailService.sendComplexMail(user.getFullName(), user.getEmail(), verificationToken.getToken());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("/check/{email}")
     public ResponseEntity<?> isEmailRegistered(@PathVariable String email) {
         return new ResponseEntity<>(userService.isEmailRegistered(email), HttpStatus.OK);
