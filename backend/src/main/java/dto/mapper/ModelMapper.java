@@ -150,6 +150,9 @@ public class ModelMapper {
         itemDto.setNativeName(item.getNativeName());
         itemDto.setAcronym(item.getAcronym());
         itemDto.setUniversityId(item.getUniversity().getId());
+        itemDto.setUniversityName(item.getUniversity().getAcronym());
+        itemDto.setCountryName(item.getUniversity().getCountry().getIso2());
+        itemDto.setProgramId(item.getProgramId());
         return itemDto;
     }
 

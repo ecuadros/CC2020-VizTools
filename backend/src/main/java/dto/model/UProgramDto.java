@@ -1,5 +1,7 @@
 package dto.model;
 
+import java.util.List;
+
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -19,6 +21,12 @@ public class UProgramDto {
     private String acronym;
 
     private Long universityId;
+
+    private String universityName;
+
+    private String countryName;
+
+    private Long programId;
 
     private List<UWeightDto> weights;
 
