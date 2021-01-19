@@ -50,7 +50,7 @@ public class UserService {
         return itemOp.get();
     }
 
-    public User findOneByEmail(String email){
+    public User findByEmail(String email){
         Optional<User> itemOp = repository.findByEmail(email);
 
         if (!itemOp.isPresent()) {

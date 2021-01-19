@@ -73,7 +73,7 @@ public class AuthController {
     }
 
     public AuthTokenDto generateToken(String email) {
-        final User user = userService.findOneByEmail(email);
+        final User user = userService.findByEmail(email);
         final String token = jwtTokenUtil.generateToken(user);
         return ModelMapper.toAuthTokenDto(user, token);
     }
