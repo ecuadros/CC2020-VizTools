@@ -12,6 +12,10 @@ public class WeightException {
         public WeightNotFoundException(Long id) {
             super("Could not find the Weight with the ID " + id);
         }
+
+        public WeightNotFoundException(Long dkaId, Long programId) {
+            super("Could not find the Weight with the DKA ID " + dkaId + " and Program ID " + programId);
+        }
     }
 
 }
