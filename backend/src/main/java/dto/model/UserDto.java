@@ -12,7 +12,7 @@ public class UserDto {
 
     private Long id;
 
-    private String name;
+    private String firstName;
 
     private String lastName;
 
@@ -25,5 +25,9 @@ public class UserDto {
     private Long universityId;
 
     private Long userInfoId;
+
+    public String getFullName() {
+		return firstName + ' ' + lastName;
+	}
 
 }

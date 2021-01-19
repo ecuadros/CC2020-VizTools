@@ -56,7 +56,15 @@ public class User {
 	@JoinColumn(name = "user_info_id", referencedColumnName = "id")
 	private UserInfo userInfo;
 
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "session_info_id", referencedColumnName = "id")
+	private SessionInfo sessionInfo;
+
 	@OneToOne(mappedBy = "user")
 	private VerificationToken verificationToken;
+
+	public String getFullName() {
+		return firstName + ' ' + lastName;
+	}
 
 }
