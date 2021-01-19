@@ -8,7 +8,7 @@ public class ModelMapper {
     public static UserDto toUserDto(User item) {
         UserDto itemDto = new UserDto();
         itemDto.setId(item.getId());
-        itemDto.setName(item.getName());
+        itemDto.setFirstName(item.getFirstName());
         itemDto.setLastName(item.getLastName());
         itemDto.setIsAdmin(false);
         
@@ -55,8 +55,7 @@ public class ModelMapper {
     public static AuthTokenDto toAuthTokenDto(User item, String token) {
         AuthTokenDto itemDto = new AuthTokenDto();
         itemDto.setId(item.getId());
-        String fullName = item.getName() + ' ' + item.getLastName();
-        itemDto.setName(fullName);
+        itemDto.setName(item.getFullName());
         itemDto.setToken(token);
         itemDto.setEmail(item.getEmail());
         itemDto.setIsAdmin(false);
