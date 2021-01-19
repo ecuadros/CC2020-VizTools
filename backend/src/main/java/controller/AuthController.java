@@ -29,11 +29,11 @@ public class AuthController {
     @Autowired
     private UniversityService universityService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginReq) throws AuthenticationException {
+    @Autowired
+    private VerificationTokenService verificationTokenService;
 
-        authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword()));
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginReq) {
@@ -43,7 +43,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDto registerReq) {
-
         UserDto userDto = registerReq.getUser();
         UserInfoDto userInfoDto = registerReq.getUserInfo();
         UniversityDto universityDto = registerReq.getUniversity();
@@ -59,9 +58,12 @@ public class AuthController {
         userDto.setUniversityId(universityDto.getId());
         userDto.setIsAdmin(false);
         userDto.setUserInfoId(userInfoDto.getId());
-        userService.create(userDto);
+        userDto = userService.create(userDto);
 
-        return new ResponseEntity<>(generateToken(userDto.getEmail()), HttpStatus.OK);
+        VerificationToken verificationToken = verificationTokenService.create(userDto.getId());
+        emailService.sendComplexMail(userDto.getFullName(), userDto.getEmail(), verificationToken.getToken());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/check/{email}")
