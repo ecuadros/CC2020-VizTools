@@ -14,6 +14,7 @@ import dto.model.DKADto;
 import exception.DKAException.DKANotFoundException;
 import model.DKA;
 import model.DKAG;
+import model.Weight;
 import repository.DKARepository;
 
 @Service
@@ -25,6 +26,9 @@ public class DKAService {
 
     @Autowired
     private DKAGService dkagService;
+
+    @Autowired
+    private WeightService weightService;
 
     public DKA findById(Long id) {
         Optional<DKA> itemOp = repository.findById(id);
@@ -94,6 +98,10 @@ public class DKAService {
 
     public void delete(Long id) {
         DKA item = findById(id);
+        for (Weight weight : item.getWeights()) {
+            weightService.delete(weight.getId());
+        }
         repository.delete(item);
     }
+
 }

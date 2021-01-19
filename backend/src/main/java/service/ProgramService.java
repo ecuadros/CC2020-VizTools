@@ -13,6 +13,7 @@ import dto.mapper.ModelMapper;
 import dto.model.ProgramDto;
 import exception.ProgramException.ProgramNotFoundException;
 import model.Program;
+import model.Weight;
 import repository.ProgramRepository;
 
 @Service
@@ -21,6 +22,9 @@ public class ProgramService {
 
     @Autowired
     private ProgramRepository repository;
+
+    @Autowired
+    private WeightService weightService;
 
     public Program findById(Long id) {
         Optional<Program> itemOp = repository.findById(id);
@@ -80,6 +84,9 @@ public class ProgramService {
 
     public void delete(Long id) {
         Program item = findById(id);
+        for (Weight weight : item.getWeights()) {
+            weightService.delete(weight.getId());
+        }
         repository.delete(item);
     }
 
