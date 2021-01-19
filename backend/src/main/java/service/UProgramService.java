@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import dto.mapper.ModelMapper;
 import dto.model.UProgramDto;
-import exception.ProgramException.ProgramNotFoundException;
+import exception.ProgramException.*;
 import exception.UniversityException.UniversityNullException;
 import model.UProgram;
 import model.University;
@@ -59,6 +59,12 @@ public class UProgramService {
 
         University institution = institutionService.findById(itemDto.getUniversityId());
         item.setUniversity(institution);
+
+        if (itemDto.getProgramId() == null) {
+            throw new ProgramNullException();
+        }
+
+        item.setProgramId(itemDto.getProgramId());
         
         return ModelMapper.toUProgramDto(repository.save(item));
     }
