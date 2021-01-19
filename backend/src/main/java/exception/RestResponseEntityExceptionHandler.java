@@ -8,6 +8,7 @@ import exception.ProgramException.*;
 import exception.WeightException.*;
 import exception.UniversityException.*;
 import exception.CountryException.*;
+import exception.TokenException.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -119,6 +120,20 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(CountryNullException.class)
     public final String CountryNullHandler(CountryNullException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(TokenNotFoundException.class)
+    public final String TokenNotFoundHandler(TokenNotFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ExpiredTokenExeception.class)
+    public final String ExpiredTokenHandler(ExpiredTokenExeception ex) {
         return ex.getMessage();
     }
 
