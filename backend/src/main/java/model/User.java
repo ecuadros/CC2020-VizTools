@@ -34,7 +34,7 @@ public class User {
 	private String password;
 
 	@NotNull
-	private String name;
+	private String firstName;
 	
 	@NotNull
 	private String lastName;
@@ -55,5 +55,8 @@ public class User {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_info_id", referencedColumnName = "id")
 	private UserInfo userInfo;
+
+	@OneToOne(mappedBy = "user")
+	private VerificationToken verificationToken;
 
 }
