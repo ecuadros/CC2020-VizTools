@@ -2,7 +2,6 @@ package dto.model;
 
 import lombok.*;
 import lombok.experimental.Accessors;
-import model.User;
 
 @Getter
 @Setter
