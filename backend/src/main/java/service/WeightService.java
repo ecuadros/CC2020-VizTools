@@ -51,7 +51,7 @@ public class WeightService {
         return itemOp.get();
     }
 
-    public List<WeightDto> createChart(Long programId) {
+    public List<WeightDto> createTable(Long programId) {
         List<WeightDto> items = new ArrayList<>();
         List<DKADto> dkas = dkaService.readAll();
         programService.findById(programId);

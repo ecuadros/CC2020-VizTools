@@ -49,7 +49,7 @@ public class UWeightService {
         return items;
     }
 
-    public List<UWeightDto> createChart(Long programId) {
+    public List<UWeightDto> createTable(Long programId) {
         List<UWeightDto> items = new ArrayList<>();
         List<DKADto> dkas = dkaService.readAll();
         iprogramService.findById(programId);
