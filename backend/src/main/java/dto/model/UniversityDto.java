@@ -20,4 +20,6 @@ public class UniversityDto {
 
     private Long countryId;
 
+    private String countryName;
+
 }

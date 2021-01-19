@@ -140,6 +140,7 @@ public class ModelMapper {
         itemDto.setAcronym(item.getAcronym());
         itemDto.setUrl(item.getUrl());
         itemDto.setCountryId(item.getCountry().getId());
+        itemDto.setCountryName(item.getCountry().getNameEn());
         return itemDto;
     }
 
