@@ -14,4 +14,13 @@ public class ProgramException {
         }
     }
 
+    public static class ProgramNullException extends RuntimeException {
+        
+        private static final long serialVersionUID = 1L;
+
+        public ProgramNullException() {
+            super("The Program cannot be null");
+        }
+    }
+
 }

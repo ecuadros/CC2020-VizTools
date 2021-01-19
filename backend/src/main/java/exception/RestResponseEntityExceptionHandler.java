@@ -53,6 +53,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ExceptionHandler(ProgramNullException.class)
+    public final String ProgramNullHandler(ProgramNullException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(DKAGNotFoundException.class)
     public final String DKAGNotFoundHandler(DKAGNotFoundException ex) {
