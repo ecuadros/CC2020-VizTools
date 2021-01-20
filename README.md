@@ -46,5 +46,21 @@ $ mvn spring-boot:run
 Run frontend with node:
 
 ```sh
+$ npm install
 $ ng serve
+```
+
+## Deploy
+
+Build backend with maven:
+
+```sh
+$ mvn install
+```
+
+Build frontend with node:
+
+```sh
+$ npm install
+$ ng build --prod
 ```
