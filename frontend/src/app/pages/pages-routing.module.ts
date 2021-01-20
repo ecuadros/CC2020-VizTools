@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { LandingGuard } from '../@core/guards';
 import { LandingComponent } from './landing/landing.component';
+import { CompareToolComponent } from './compare-tool/compare-tool.component';
 
 const routes: Routes = [{
   path: '',
@@ -13,6 +14,10 @@ const routes: Routes = [{
       path: '',
       component: LandingComponent,
       canActivate: [ LandingGuard ]
+    },
+    {
+      path: 'compare-tool',
+      component: CompareToolComponent
     }
   ],
 }];

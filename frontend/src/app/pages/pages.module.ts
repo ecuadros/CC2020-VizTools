@@ -6,6 +6,9 @@ import { DevExtremeModule } from '../devextreme.module';
 import { ChartsModule } from 'ng2-charts'
 import { CoreModule } from '../@core/core.module';
 import { LandingComponent } from './landing/landing.component';
+import { CompareToolComponent } from './compare-tool/compare-tool.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { AuthModule } from '../auth/auth.module';
 
 
 
@@ -13,13 +16,16 @@ import { LandingComponent } from './landing/landing.component';
   declarations: [
     PagesComponent,
     LandingComponent,
+    CompareToolComponent,
   ],
   imports: [
     CommonModule,
     PagesRoutingModule,
     CoreModule,
     DevExtremeModule,
-    ChartsModule
+    ChartsModule,
+    TranslateModule,
+    AuthModule
   ]
 })
 export class PagesModule { }
