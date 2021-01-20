@@ -1,0 +1,15 @@
+<div class="share-section">
+  <div class="row">
+    <div class="label-div">
+      <p class="label" translate>shared.shareLink.label</p>
+    </div>
+    <div class="link-div">
+      <input #linkInput class="link-input" [readonly]="true" type="text" [value]="link" onClick="this.select();">
+      <div class="clipboard-button">
+        <button (click)="copyInputMessage(linkInput)" value="Copy to Clipboard">
+          <fa-icon class="clipboard-icon" [icon]="faClipboard"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

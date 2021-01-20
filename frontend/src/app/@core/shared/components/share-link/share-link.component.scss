@@ -1,0 +1,69 @@
+.share-section {
+  margin: 0 auto;
+  position: relative;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.share-section .row {
+  margin: 0 auto;
+  margin-right: 0px;
+}
+
+.share-section .label-div {
+  vertical-align: middle;
+}
+
+.share-section .label-div .label {
+  margin-bottom: 0;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.share-section .link-div {
+  text-align: right;
+  display: table;
+  height: 35px;
+}
+
+.share-section .link-div .link-input {
+  padding: 3px 12px;
+  border-radius: 6px;
+  border-width: 1px;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-color: rgba(27, 31, 35, 0.15);
+  display: table-cell;
+  outline: none !important;
+  margin-right: -1px;
+  position: relative;
+  height: 100%;
+  font-size: 0.95em;
+}
+
+.clipboard-button {
+  display: table-cell;
+  width: 60px;
+  height: 100%;
+}
+
+.clipboard-button button {
+  background-color: rgb(250, 251, 252);
+  border-color: rgba(27, 31, 35, 0.15);
+  border-width: 1px;
+
+  outline: none !important;
+  line-height: 1;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.clipboard-button button:hover {
+  background-color: rgb(243, 244, 246);
+  border-color: rgba(27, 31, 35, 0.15);
+  transition-duration: .1s;
+}
+  
