@@ -1,0 +1,22 @@
+.new-cell {
+  font-style: italic;
+  opacity: 0.5;
+}
+
+.dka-cell {
+  display: flex;
+}
+
+.dka-cell:hover .trash {
+  display: block;
+}
+
+.trash {
+  display: none;
+  margin-left: 10px;
+}
+
+.trash-icon {
+  font-size: 18px;
+  text-decoration: none;
+}

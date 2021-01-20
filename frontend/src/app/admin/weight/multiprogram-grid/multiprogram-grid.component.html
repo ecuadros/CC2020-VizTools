@@ -1,0 +1,80 @@
+<dx-data-grid id="gridContainer" [dataSource]="tableDS" [showColumnLines]="true" [showRowLines]="true"
+  [showBorders]="true" [height]="500" [rowAlternationEnabled]="true" [columnAutoWidth]="true"
+  (onRowUpdating)="onRowUpdating($event)" (onRowClick)="onRowClick($event)">
+
+  <dxo-editing [allowUpdating]="true" [allowAdding]="false" [allowDeleting]="false" [selectTextOnEditStart]="true"
+    [useIcons]="true" mode="cell">
+  </dxo-editing>
+
+  <dxo-grouping [allowCollapsing]="false" [contextMenuEnabled]="true" expandMode="rowClick"></dxo-grouping>
+  <dxo-group-panel [visible]="false" emptyPanelText="Relative Weights of Computing Knowledge Areas"></dxo-group-panel>
+
+  <dxi-column dataField="id" [allowEditing]="false" [visible]="false"></dxi-column>
+
+  <dxi-column dataField="dkagTitle" [allowEditing]="false" [groupIndex]="0" caption="" [sortIndex]="0" sortOrder="asc"
+    [calculateCellValue]="onDKAGPrefix">
+  </dxi-column>
+
+  <dxi-column dataField="dkaIndex" [sortIndex]="1" sortOrder="asc" [visible]="false">
+  </dxi-column>
+
+  <dxi-column dataField="dkaIndex" [caption]="'admin.home.gridIndexTitle' | translate" [width]="60"
+    [allowEditing]="false" [visible]="true" [calculateCellValue]="onDKAPrefix">
+  </dxi-column>
+
+  <dxi-column dataField="dkaTitle" cellTemplate="cellTemplate" [caption]="'admin.home.gridDKATitle' | translate">
+    <dxi-validation-rule type="required" message="DKA Title is required"></dxi-validation-rule>
+  </dxi-column>
+  <div *dxTemplate="let cell of 'cellTemplate'">
+    <div class="dka-cell" [ngClass]="cell.value==newRowLabel ?'new-cell':''">
+      {{cell.value}}
+      <div *ngIf="cell.value!=newRowLabel" class="trash dx-command-edit dx-command-edit-with-icons ">
+        <a (click)="onDeleteDKA(cell.data)" class="dx-link dx-link-delete dx-icon-trash dx-link-icon trash-icon"
+          title="Delete" aria-label="Delete"></a>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngFor="let program of selectedPrograms">
+    <dxi-column alignment="center" [caption]="program.acronym">
+      <dxi-column alignment="center" [width]="50" [caption]="'admin.home.gridMinTitle' | translate"
+        [dataField]="program.id + '_min'" [allowEditing]="true" [visible]="true">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+
+      <dxi-column alignment="center" [width]="50" [caption]="'admin.home.gridMaxTitle' | translate"
+        [dataField]="program.id + '_max'" [allowEditing]="true" [visible]="true">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-column>
+    </dxi-column>
+  </ng-container>
+
+  <dxo-search-panel [visible]="false"></dxo-search-panel>
+  <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+  <dxo-paging [enabled]="false"></dxo-paging>
+  <dxo-scrolling mode="virtual" columnRenderingMode="virtual"></dxo-scrolling>
+
+</dx-data-grid>
+
+<dx-popup show-title="true" [title]="'admin.home.updateDKAGFormTitle' | translate" [(visible)]="dkagFormVisible"
+  [dragEnabled]="false" [closeOnOutsideClick]="true" height="190" width="400">
+  <div *dxTemplate="let data of 'content'">
+
+    <form (submit)="onUpdateDKAG($event)">
+      <dx-form labelLocation="top" [(formData)]="dkagFormData" [readOnly]="false" [showColonAfterLabel]="true">
+
+        <dxi-item dataField="name">
+          <dxo-label [text]="'admin.home.updateDKAGFormNameField' | translate"></dxo-label>
+          <dxi-validation-rule type="required"
+            [message]="'admin.home.typeValidationRequired' | translate:{'field': ('admin.home.updateDKAGFormNameField' | translate)}">
+          </dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item itemType="button" horizontalAlignment="left" [buttonOptions]="buttonOptions">
+        </dxi-item>
+
+      </dx-form>
+    </form>
+
+  </div>
+</dx-popup>
