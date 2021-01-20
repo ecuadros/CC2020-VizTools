@@ -1,0 +1,26 @@
+<div class="row chip-list">
+  <ng-container *ngIf="options !== undefined">
+    <ng-container *ngFor="let item of items; let i = index">
+      <ng-container *ngIf="options.filter(item)">
+        <div class="chip">
+          <span class="color-box" [style.background]="item.color" [cpPosition]="'bottom'" [cpPositionOffset]="'50%'"
+            [cpPositionRelativeToArrow]="true" (colorPickerClose)="onColorPickerChange()"
+            [(colorPicker)]="item.color"></span>
+          {{item.name}}
+          <span *ngIf="!onlyView" class="close-btn" (click)="onRemoveItem(i)">&times;</span>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="options === undefined">
+    <ng-container *ngFor="let item of items; let i = index">
+      <div class="chip">
+        <span class="color-box" [style.background]="item.color" [cpPosition]="'bottom'" [cpPositionOffset]="'50%'"
+          [cpPositionRelativeToArrow]="true" (colorPickerClose)="onColorPickerChange()"
+          [(colorPicker)]="item.color"></span>
+        {{item.name}}
+        <span *ngIf="!onlyView" class="close-btn" (click)="onRemoveItem(i)">&times;</span>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
