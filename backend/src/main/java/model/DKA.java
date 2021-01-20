@@ -18,8 +18,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Entity
 @Table(name = "dka", uniqueConstraints = {
-    @UniqueConstraint(columnNames = { "name" }),
-    @UniqueConstraint(columnNames = { "dkag_id", "index" })
+    @UniqueConstraint(columnNames = { "name" })
 })
 public class DKA {
 
