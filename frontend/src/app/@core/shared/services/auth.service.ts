@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from '../../../../environments/environment';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
 
   static path = environment.APIEndpoint + '/auth/';
@@ -16,8 +18,8 @@ export class AuthService {
       email: email,
       password: password
     }
-    return this.http.post<any>(AuthService.path + 'login', form)
-      .pipe(map(user => {
+    return this.http.post<any>(AuthService.path + 'login', form).pipe(
+      map(user => {
         if (user && user.token) {
           this.storeUser(user);
         }
@@ -26,8 +28,8 @@ export class AuthService {
   }
 
   register(form: any) {
-    return this.http.post<any>(AuthService.path + 'register', form)
-      .pipe(map(user => {
+    return this.http.post<any>(AuthService.path + 'register', form).pipe(
+      map(user => {
         if (user && user.token) {
           this.storeUser(user);
         }
@@ -35,8 +37,15 @@ export class AuthService {
       ));
   }
 
-  isEmailRegistered(email: string) {
+  activateAccount(token: string) {
+    return this.http.get(AuthService.path + 'activate-account/' + token).toPromise();
+  }
 
+  resendEmail(email: string) {
+    return this.http.get(AuthService.path + 'resend-email/' + email).toPromise();
+  }
+
+  isEmailRegistered(email: string) {
     return this.http.get(AuthService.path + 'check/' + email).toPromise();
   }
 
@@ -66,7 +75,7 @@ export class AuthService {
     if (this.isAuthenticated()) {
       return localStorage.getItem('name')
     }
-    return "";
+    return '';
   }
 
   get universityId(): number {
@@ -80,7 +89,7 @@ export class AuthService {
     if (this.isAuthenticated() && !this.isAdmin()) {
       return localStorage.getItem('universityName')
     }
-    return "";
+    return '';
   }
 
   isAuthenticated(): boolean {
@@ -93,7 +102,7 @@ export class AuthService {
   isAdmin(): boolean {
     const admin = this.admin;
     if (!admin) return false;
-    return admin == "true";
+    return admin == 'true';
   }
 
   private storeUser(user: any) {
