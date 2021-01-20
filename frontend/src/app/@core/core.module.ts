@@ -1,25 +1,26 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent, FooterComponent, AlertComponent } from './components';
-import { SampleComponent, BlockComponent } from './layouts';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { TranslateModule } from '@ngx-translate/core';
+import { DevExtremeModule } from '../devextreme.module';
+
+import { HeaderComponent, FooterComponent } from './components';
+import { SampleComponent, ExtendedSampleComponent, BlockComponent } from './layouts';
+import { SessionInterceptor } from './interceptors';
 import {
-  AlertService,
-  AuthService,
-  ChartService,
-  CountryService,
-  DKAGService,
-  DKAService,
-  ProgramService,
-  UniversityService,
-  UProgramService
-} from './services';
-import {
-  AdminGuard,
-  AuthGuard,
-  LandingGuard,
-  UserGuard
-} from './guards';
+  AlertComponent,
+  ChipListComponent,
+  DlComputingProgramsComponent,
+  DlUniversityProgramsComponent,
+  DlUserProgramsComponent,
+  LinearGraphComponent,
+  LoginInlineComponent,
+  ShareLinkComponent
+} from './shared/components';
 
 
 
@@ -28,39 +29,52 @@ import {
     HeaderComponent,
     FooterComponent,
     SampleComponent,
+    ExtendedSampleComponent,
+    BlockComponent,
     AlertComponent,
-    BlockComponent
+    ChipListComponent,
+    DlComputingProgramsComponent,
+    DlUniversityProgramsComponent,
+    DlUserProgramsComponent,
+    LinearGraphComponent,
+    LoginInlineComponent,
+    ShareLinkComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    ColorPickerModule,
+    DevExtremeModule,
+    TranslateModule
   ],
   exports: [
-    HeaderComponent,
-    FooterComponent,
     SampleComponent,
+    ExtendedSampleComponent,
+    BlockComponent,
     AlertComponent,
-    BlockComponent
+    ChipListComponent,
+    DlComputingProgramsComponent,
+    DlUniversityProgramsComponent,
+    DlUserProgramsComponent,
+    LinearGraphComponent,
+    LoginInlineComponent,
+    ShareLinkComponent
   ]
 })
+
 export class CoreModule {
   static forRoot(): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,
       providers: [
-        AlertService,
-        AuthService,
-        ChartService,
-        CountryService,
-        DKAGService,
-        DKAService,
-        ProgramService,
-        UniversityService,
-        UProgramService,
-        AuthGuard,
-        LandingGuard,
-        AdminGuard,
-        UserGuard
+        {
+          provide: HTTP_INTERCEPTORS,
+          useClass: SessionInterceptor,
+          multi: true
+        }
       ],
     };
   }
