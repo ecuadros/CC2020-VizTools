@@ -1,59 +1,35 @@
-<h1 class="title">Login</h1>
+<h1 class="title" translate>auth.login.title</h1>
+
 <app-alert></app-alert>
 
-<form (ngSubmit)="onLogin()" [formGroup]="loginForm" aria-labelledby="title">
+<form (submit)="onFormSubmit($event)">
+  <dx-form labelLocation="top" [(formData)]="formData" [readOnly]="false" [showColonAfterLabel]="true">
 
-  <div class="form-group">
-    <label class="label" for="input-email">Email address:</label>
-    <input class="form-control" formControlName="email" name="email" id="input-email" pattern=".+@.+\..+"
-      placeholder="Email address" autofocus>
-    <ng-container *ngIf="form.email.invalid && form.email.touched">
-      <p class="error-message" *ngIf="form.email.errors?.required">
-        Email is required!
-      </p>
-      <p class="error-message" *ngIf="form.email.errors?.pattern">
-        Email should be the real one!
-      </p>
-    </ng-container>
-  </div>
+    <dxi-item dataField="email">
+      <dxo-label [text]="'auth.login.emailField' | translate"></dxo-label>
+      <dxi-validation-rule type="required"
+        [message]="'auth.typeValidationRequired' | translate:{'field': ('auth.login.emailField' | translate)}">
+      </dxi-validation-rule>
+      <dxi-validation-rule type="email" [message]="'auth.emailTypeValidationEmail' | translate">
+      </dxi-validation-rule>
+    </dxi-item>
 
-  <div class="form-group">
-    <label class="label" for="input-password">Password:</label>
-    <input class="form-control" formControlName="password" name="password" type="password" id="input-password"
-      placeholder="Password">
-    <ng-container *ngIf="form.password.invalid && form.password.touched ">
-      <p class="error-message" *ngIf="form.password.errors?.required">
-        Password is required!
-      </p>
-      <p class="error-message" *ngIf="form.password.errors?.minlength || form.password.errors?.maxlength">
-        Password should contains from 6 to 18 characters
-      </p>
-    </ng-container>
-  </div>
-  <!--
-  <div class="form-control-group accept-group">
-    <nb-checkbox name="rememberMe" [(ngModel)]="user.rememberMe" *ngIf="rememberMe">Remember me</nb-checkbox>
-    <a class="forgot-password" routerLink="../request-password">Forgot Password?</a>
-  </div>
--->
-  <button class="btn btn-primary w-100" status="success" [disabled]="submitted || !loginForm.valid"
-    [class.btn-pulse]="submitted">
-    Log In
-  </button>
+    <dxi-item dataField="password" [editorOptions]="{ mode: 'password' }">
+      <dxo-label [text]="'auth.login.passwordField' | translate"></dxo-label>
+      <dxi-validation-rule type="required"
+        [message]="'auth.typeValidationRequired' | translate:{'field': ('auth.login.passwordField' | translate)}">
+      </dxi-validation-rule>
+      <dxi-validation-rule type="stringLength" [min]="6" [max]="18"
+        [message]="'auth.passwordTypeValidationLength' | translate">
+      </dxi-validation-rule>
+    </dxi-item>
+
+    <dxi-item itemType="button" horizontalAlignment="center" [buttonOptions]="buttonOptions">
+    </dxi-item>
+
+  </dx-form>
 </form>
-<!--
-<section *ngIf="socialLinks && socialLinks.length > 0" class="links" aria-label="Social sign in">
-  or enter with:
-  <div class="socials">
-    <ng-container *ngFor="let socialLink of socialLinks">
-      <a *ngIf="socialLink.link" [routerLink]="socialLink.link" [attr.target]="socialLink.target"
-        [attr.class]="socialLink.icon" [class.with-icon]="socialLink.icon">{{ socialLink.title }}</a>
-      <a *ngIf="socialLink.url" [attr.href]="socialLink.url" [attr.target]="socialLink.target"
-        [attr.class]="socialLink.icon" [class.with-icon]="socialLink.icon">{{ socialLink.title }}</a>
-    </ng-container>
-  </div>
-</section>
--->
-<section class="another-action" aria-label="Register">
-  Don't have an account? <a class="text-link" routerLink="/auth/register">Register</a>
+
+<section class="another-action" aria-label="Register" translate>
+  auth.login.anotherAction <a class="text-link" routerLink="/auth/register" translate>auth.login.registerLink</a>
 </section>

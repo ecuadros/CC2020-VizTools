@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService, AuthService } from 'src/app/@core/services';
-
+import { Alert } from 'src/app/@core/models';
+import { AlertService, AuthService, TranslateConfigService } from 'src/app/@core/shared/services';
 
 @Component({
   selector: 'app-login',
@@ -11,49 +10,77 @@ import { AlertService, AuthService } from 'src/app/@core/services';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
-  submitted = false;
   returnUrl: string;
 
-  options = {
-    autoClose: true,
-    keepAfterRouteChange: false
+  formData: any = {
+    email: '',
+    password: ''
   };
 
+  buttonOptions: any = {
+    text: 'Log in',
+    type: 'default',
+    useSubmitBehavior: true
+  };
+
+  errorUnauthorizedMessage: string;
+  errorNotActivatedMessage: string;
+
+  resendLinkLabel: string;
+
   constructor(
-    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private translateService: TranslateConfigService
+  ) {
+    this.translateService.get('auth.login.loginButton').subscribe(
+      (text: string) => { this.buttonOptions.text = text }
+    );
+    this.translateService.get('auth.login.errorUnauthorizedMessage').subscribe(
+      (text: string) => { this.errorUnauthorizedMessage = text }
+    );
+    this.translateService.get('auth.login.errorNotActivatedMessage').subscribe(
+      (text: string) => { this.errorNotActivatedMessage = text }
+    );
+    this.translateService.get('auth.login.resendLink').subscribe(
+      (text: string) => { this.resendLinkLabel = text }
+    );
+  }
 
-  ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(18)]]
-    });
-
+  ngOnInit(): void {
     this.authService.logout();
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';    
   }
 
-  onLogin() {
-    let email = this.form.email.value
-    let password = this.form.password.value
+  onFormSubmit(e): void {
+    e.preventDefault();
+    this.authService.login(this.formData.email, this.formData.password).subscribe(
+      () => {
+        this.router.navigate([this.returnUrl]);
+      },
+      error => {
+        let message: string = error.error;
+        let alertOptions: Alert = new Alert();
+        alertOptions.autoClose = true;
+        alertOptions.keepAfterRouteChange = false;
 
-    this.authService.login(email, password)
-      .subscribe(
-        data => {
-          this.alertService.success('Successfully logged', this.options);
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          this.alertService.error('Invalid username or password', this.options);
+        if (error.status === 401) {
+          message = this.errorUnauthorizedMessage;
         }
-      );
+        if (error.status === 409) {
+          alertOptions.autoClose = false;
+          alertOptions.linkUrl = '/auth/resend-email';
+          alertOptions.linkLabel = this.resendLinkLabel;
+          alertOptions.linkParams = {
+            email: this.formData.email
+          };
+          message = this.errorNotActivatedMessage;
+        }
+        this.alertService.error(message, alertOptions);
+      }
+    );
   }
 
-  get form() {
-    return this.loginForm.controls;
-  }
 }
