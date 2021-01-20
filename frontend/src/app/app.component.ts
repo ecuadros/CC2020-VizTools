@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateConfigService } from './@core/shared/services';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'frontend';
+
+  constructor(
+    private translateService: TranslateConfigService
+  ) {
+    this.translateService.setDefaultLang('en');
+  }
+
 }
