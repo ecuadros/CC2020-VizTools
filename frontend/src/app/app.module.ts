@@ -9,9 +9,15 @@ import { AppComponent } from './app.component';
 import { DevExtremeModule } from './devextreme.module';
 import { CoreModule } from './@core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
-
+export function rootLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -25,8 +31,17 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     AppRoutingModule,
     DevExtremeModule,
+    NgxSpinnerModule,
     ChartsModule,
-    CoreModule.forRoot()
+    FontAwesomeModule,
+    CoreModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: rootLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
