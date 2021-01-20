@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService, AuthService, CountryService, UniversityService } from 'src/app/@core/services';
+import { faEnvelopeOpenText } from '@fortawesome/free-solid-svg-icons';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from 'src/app/@core/shared/services';
+import { UserData, UserDetails } from 'src/app/@core/models';
+
+enum Section { Credentials, Information, Completed }
 
 @Component({
   selector: 'app-register',
@@ -10,165 +14,79 @@ import { AlertService, AuthService, CountryService, UniversityService } from 'sr
 })
 export class RegisterComponent implements OnInit {
 
-  userForm: FormGroup;
-  infoForm: FormGroup;
-
-  submitted = false;
-  returnUrl: string;
-  universitySection = false;
+  userData: UserData = new UserData();
+  userDetails: UserDetails = new UserDetails();
   
-  universityPD = [];
-  countryPD = [];
+  section: Section = Section.Credentials;
 
-  countryFilterPD: any;
-  countrySelected = false;
+  emailIcon = faEnvelopeOpenText;
 
-  defaultDomain: string;
+  submitted: boolean = false;
 
-  options = {
+  alertOptions = {
     autoClose: true,
     keepAfterRouteChange: false
   };
 
   constructor(
-    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private countryService: CountryService,
-    private universityService: UniversityService,
     private router: Router,
     private authService: AuthService,
-    private alertService: AlertService
-  ) { }
+    private spinner: NgxSpinnerService
+  ) {
+    let userData = this.route.snapshot.queryParamMap.get('userData');
+    if (userData != null) {
+      this.userData = JSON.parse(decodeURIComponent(userData));
+      this.onCredentialComplete();
+    }
+  }
 
   ngOnInit(): void {
-    this.userForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(18)]]
-    });
-
-    this.infoForm = this.formBuilder.group({
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      zipCode: ['', Validators.required],
-      phone: ['', Validators.required],
-      whatsApp: [false],
-      telegram: [false],
-      university: ['', Validators.required],
-      acronym: ['', Validators.required],
-      domain: ['', Validators.required],
-      country: ['', Validators.required],
-      countryUniversity: ['', Validators.required],
-      occupation: ['', Validators.required]
-    });
-
-    this.countryService.readAll().then(
-      response => { this.countryPD = response }
-    );
-
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  onUserRegister() {
-    let email = this.userControl.email.value;
-    this.authService.isEmailRegistered(email).then(
-      response => {
-        this.universitySection = true;
-      }, error => {
-        this.alertService.error(error.error, this.options);
-      });
-
-    let i = email.indexOf("@");
-    let url = 'wwww.' + email.substring(i + 1);
-    this.defaultDomain = url;
-    this.infoControl.domain.setValue(url);
+  onCredentialComplete(): void {
+    let email: string = this.userData.email;
+    let i: number = email.indexOf('@');
+    this.userDetails.universityUrlTemp = 'wwww.' + email.substring(i + 1);
+    this.section = Section.Information;
   }
 
-  onCompleteRegister() {
-    this.submitted = true;
-    let university = this.universityPD.find(x => x.id == this.infoControl.university.value);
-    let form = {
-      user: {
-        name: this.userControl.firstName.value,
-        lastName: this.userControl.lastName.value,
-        email: this.userControl.email.value,
-        password: this.userControl.password.value
-      },
-      userInfo: {
-        country: this.infoControl.country.value,
-        city: this.infoControl.city.value,
-        state: this.infoControl.state.value,
-        zipCode: this.infoControl.zipCode.value,
-        phone: this.infoControl.phone.value,
-        whatsApp: this.infoControl.whatsApp.value,
-        telegram: this.infoControl.telegram.value,
-        occupation: this.infoControl.occupation.value,
-      },
-      university: {
-        id: this.infoControl.university.value,
-        name: university.name,
-        acronym: this.infoControl.acronym.value,
-        url: this.infoControl.domain.value,
-        countryId: this.infoControl.countryUniversity.value,
-      },
+  onRegisterComplete(): void {    
+    let formData = {
+      user: this.userData,
+      userInfo: this.userDetails.userInfo,
+      university: this.userDetails.university
     }
-    this.authService.register(form).subscribe(
-      data => {
-        this.router.navigate([this.returnUrl]);
-        },
-      error => {
-        this.alertService.error(error.error, this.options);
-        this.submitted = false;
+    this.spinner.show();
+    this.submitted = true;
+    console.log('aahola');
+    this.authService.register(formData).subscribe(
+      () => {
+        this.spinner.hide();
+        this.section = Section.Completed;
+        console.log('hola');
+        setTimeout(
+          ()=> {
+            this.router.navigate(['/'])
+          }, 5000 );
       }
     );
   }
 
-  onCountrySelected(e) {
-    this.infoControl.countryUniversity.setValue(e.value);
-    this.universityService.readByCountry(e.value).then(
-      response => { this.universityPD = response; this.countrySelected = true; }
-    );
-  }
-  
-  onCountryUniversitySelected(e) {
-    this.universityService.readByCountry(e.value).then(
-      response => { this.universityPD = response; this.countrySelected = true; }
-    );
+  onBackForm(): void {
+    this.section = Section.Credentials;
   }
 
-  onUniversitySelected(e) {
-    let university = this.universityPD.find(x => x.id == e.value);
-    this.infoControl.acronym.setValue(university.acronym);
-    this.infoControl.domain.setValue(university.url);
+  get CredentialsSection(): number {
+    return Section.Credentials;
   }
 
-  onNewUniversity(e) {
-    e.customItem = { id: -1, name: e.text };
-
-    let newUniversity = this.universityPD.find(x => x.id == -1);
-
-    if (newUniversity == undefined) {
-      this.universityPD.push(e.customItem);
-    } else {
-      newUniversity.name = e.text;
-    }
-
-    this.infoControl.university.setValue(-1);
-    this.infoControl.acronym.reset();
-    this.infoControl.domain.setValue(this.defaultDomain);
+  get InformationSection(): number {
+    return Section.Information;
   }
 
-  backForm() {
-    this.universitySection = false;
-  }
-
-  get userControl() {
-    return this.userForm.controls;
-  }
-
-  get infoControl() {
-    return this.infoForm.controls;
+  get CompletedSection(): number {
+    return Section.Completed;
   }
 
 }

@@ -1,212 +1,26 @@
-<h1 class="title">Register</h1>
-<app-alert></app-alert>
+<h1 class="title" translate>auth.register.title</h1>
 
-<ng-container *ngIf="!universitySection">
-
-  <form (ngSubmit)="onUserRegister()" [formGroup]="userForm">
-
-    <div class="form-group">
-      <div class="row">
-        <div class="col">
-          <label class="label" for="input-firstName">First Name:</label>
-          <input class="form-control" formControlName="firstName" id="input-firstname" placeholder="First Name">
-          <ng-container *ngIf="userControl.firstName.invalid && userControl.firstName.touched">
-            <p class="error-message" *ngIf="userControl.firstName.errors?.required">
-              First name is required!
-            </p>
-          </ng-container>
-        </div>
-
-        <div class="col">
-          <label class="label" for="input-lastName">Last Name:</label>
-          <input class="form-control" formControlName="lastName" id="input-lastName" placeholder="Last Name">
-          <ng-container *ngIf="userControl.lastName.invalid && userControl.lastName.touched">
-            <p class="error-message" *ngIf="userControl.lastName.errors?.required">
-              Last name is required!
-            </p>
-          </ng-container>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="label" for="input-email">Email address:</label>
-      <input class="form-control" formControlName="email" id="input-email" pattern=".+@.+\..+"
-        placeholder="Email address">
-      <ng-container *ngIf="userControl.email.invalid && userControl.email.touched">
-        <p class="error-message" *ngIf="userControl.email.errors?.required">
-          Email is required!
-        </p>
-        <p class="error-message" *ngIf="userControl.email.errors?.pattern">
-          Email should be the real one!
-        </p>
-      </ng-container>
-    </div>
-
-    <div class="form-group">
-      <label class="label" for="input-password">Password:</label>
-      <input class="form-control" formControlName="password" name="password" type="password" id="input-password"
-        placeholder="Password">
-      <ng-container *ngIf="userControl.password.invalid && userControl.password.touched ">
-        <p class="error-message" *ngIf="userControl.password.errors?.required">
-          Password is required!
-        </p>
-        <p class="error-message"
-          *ngIf="userControl.password.errors?.minlength || userControl.password.errors?.maxlength">
-          Password should contains from 6 to 18 characters
-        </p>
-      </ng-container>
-    </div>
-
-    <button class="btn btn-primary w-100" status="success" [disabled]="!userForm.valid" [class.btn-pulse]="submitted">
-      Next
-    </button>
-  </form>
-
-  <section class="another-action" aria-label="Log In">
-    Already have an account? <a class="text-link" routerLink="/auth/login">Log In</a>
+<ng-container *ngIf="section === CredentialsSection">
+  <app-credentials-form [formData]="userData" (onSubmit)="onCredentialComplete()"></app-credentials-form>
+  <section class="another-action" translate>
+    auth.register.anotherAction <a class="text-link" routerLink="/auth/login" translate>auth.register.loginLink</a>
   </section>
-
 </ng-container>
 
-<ng-container *ngIf="universitySection">
-  <form (ngSubmit)="onCompleteRegister()" [formGroup]="infoForm">
+<ng-container *ngIf="section === InformationSection">
+  <div class="spinner-container">
+    <ngx-spinner bdColor="rgb(255,255,255)" size="medium" color="#000000" type="ball-rotate" [fullScreen]="false">
+      <p class="loading-message" translate>auth.register.loadingMessage</p>
+    </ngx-spinner>
+    <app-info-form *ngIf="!submitted" [formData]="userDetails" (onBack)="onBackForm()"
+      (onSubmit)="onRegisterComplete($event)">
+    </app-info-form>
+  </div>
+</ng-container>
 
-    <h3 class="subtitle">User Information</h3>
-
-    <div class="form-group">
-      <label class="label">Country:</label>
-      <dx-select-box displayExpr="name" formControlName="country" placeholder="Choose country" [items]="countryPD"
-        [searchEnabled]="true" valueExpr="id" (onValueChanged)="onCountrySelected($event)"></dx-select-box>
-    </div>
-
-    <div class="form-group">
-      <label class="label" for="input-city">City:</label>
-      <input class="form-control" formControlName="city" id="input-city">
-      <ng-container *ngIf="infoControl.city.invalid && infoControl.city.touched">
-        <p class="error-message" *ngIf="infoControl.city.errors?.required">
-          City is required!
-        </p>
-      </ng-container>
-    </div>
-
-    <div class="form-group">
-      <label class="label" for="input-state">State / Province / Region</label>
-      <input class="form-control" formControlName="state" id="input-state">
-      <ng-container *ngIf="infoControl.state.invalid && infoControl.state.touched">
-        <p class="error-message" *ngIf="infoControl.state.errors?.required">
-          State / Province / Region is required!
-        </p>
-      </ng-container>
-    </div>
-
-    <div class="form-group">
-      <label class="label" for="input-zipcode">Zip Code</label>
-      <input class="form-control" formControlName="zipCode" id="input-zipcode">
-      <ng-container *ngIf="infoControl.zipCode.invalid && infoControl.zipCode.touched">
-        <p class="error-message" *ngIf="infoControl.zipCode.errors?.required">
-          Zip Code is required!
-        </p>
-      </ng-container>
-    </div>
-
-    <div class="form-group">
-      <label class="label" for="input-phone">Phone number</label>
-      <input class="form-control" formControlName="phone" id="input-phone">
-      <ng-container *ngIf="infoControl.phone.invalid && infoControl.phone.touched">
-        <p class="error-message" *ngIf="infoControl.phone.errors?.required">
-          Phone number is required!
-        </p>
-      </ng-container>
-    </div>
-
-    <div class="form-group">
-      <div class="form-check">
-        <input class="form-check-input" formControlName="whatsApp" type="checkbox" id="checkbox-whatsapp">
-        <img height="20" style="margin-right: 5px;" src="assets/whatsapp.svg">
-        <label class="form-check-label" for="checkbox-whatsapp">WhatsApp</label>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="form-check">
-        <input class="form-check-input" formControlName="telegram" type="checkbox" id="checkbox-telegram">
-        <img height="20" style="margin-right: 5px;" src="assets/telegram.svg">
-        <label class="form-check-label" for="checkbox-telegram">Telegram</label>
-      </div>
-    </div>
-    <hr>
-
-    <h3 class="subtitle">University</h3>
-    
-    <div class="form-group">
-      <label class="label">Country:</label>
-      <dx-select-box formControlName="countryUniversity" displayExpr="name" placeholder="Choose country" [items]="countryPD"
-        [searchEnabled]="true" valueExpr="id" (onValueChanged)="onCountryUniversitySelected($event)"></dx-select-box>
-    </div>
-
-    <div class="form-group">
-      <label class="label">University name:</label>
-      <dx-select-box formControlName="university" displayExpr="name" placeholder="Choose or register new university"
-        [items]="universityPD" [searchEnabled]="true" valueExpr="id" [acceptCustomValue]="true"
-        (onCustomItemCreating)="onNewUniversity($event)" [disabled]="!countrySelected"
-        (onValueChanged)="onUniversitySelected($event)"></dx-select-box>
-      <ng-container *ngIf="infoControl.university.invalid && infoControl.university.touched">
-        <p class="error-message" *ngIf="infoControl.university.errors?.required">
-          University is required!
-        </p>
-      </ng-container>
-    </div>
-
-    <div class="form-group">
-      <label class="label" for="input-occupation">Position:</label>
-      <input class="form-control" formControlName="occupation" id="input-occupation"
-        placeholder="Position">
-      <ng-container *ngIf="infoControl.occupation.invalid && infoControl.occupation.touched ">
-        <p class="error-message" *ngIf="infoControl.occupation.errors?.required">
-          Position is required!
-        </p>
-      </ng-container>
-    </div>
-
-    <div class="form-group">
-      <div class="row">
-        <div class="col">
-          <label class="label" for="input-domain">Domain:</label>
-          <input class="form-control" formControlName="domain" id="input-domain" placeholder="Domain">
-          <ng-container *ngIf="infoControl.domain.invalid && infoControl.domain.touched ">
-            <p class="error-message" *ngIf="infoControl.domain.errors?.required">
-              Domain is required!
-            </p>
-          </ng-container>
-        </div>
-
-        <div class="col">
-          <label class="label" for="input-uacronym">Acronym:</label>
-          <input class="form-control" formControlName="acronym" name="acronym" id="input-uacronym"
-            placeholder="Acronym">
-          <ng-container *ngIf="infoControl.acronym.invalid && infoControl.acronym.touched ">
-            <p class="error-message" *ngIf="infoControl.acronym.errors?.required">
-              Acronym is required!
-            </p>
-          </ng-container>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <button class="btn btn-outline-secondary w-100" (click)="backForm()">
-          Back
-        </button>
-      </div>
-      <div class="col">
-        <button class="btn btn-primary w-100" status="success" [disabled]="submitted || !infoForm.valid"
-          [class.btn-pulse]="submitted" type="submit">
-          Register
-        </button>
-      </div>
-    </div>
-  </form>
+<ng-container *ngIf="section === CompletedSection">
+  <div class="message-container">
+    <fa-icon class="status-icon" [icon]="emailIcon"></fa-icon>
+    <p class="message" translate>auth.register.successMessage</p>
+  </div>
 </ng-container>
