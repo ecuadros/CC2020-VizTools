@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService, TableService, CProgramService, UProgramService, SessionService, UniversityService, TranslateConfigService } from 'src/app/@core/shared/services';
 import DataSource from 'devextreme/data/data_source';
-import { AuthService, ChartService, ProgramService, UProgramService } from 'src/app/@core/services';
+import { forkJoin, Observable } from 'rxjs';
+import { CProgram, University, UProgram, UWeight } from 'src/app/@core/models';
 
 @Component({
   selector: 'app-weight',
@@ -9,93 +11,118 @@ import { AuthService, ChartService, ProgramService, UProgramService } from 'src/
 })
 export class WeightComponent implements OnInit {
 
-  uProgramPD: any[];
-  cProgramPD: any[];
-  chartDS: any;
+  uPrograms: UProgram[] = [];
+  cPrograms: CProgram[] = [];
+  tableDS: DataSource;
 
-  addProgramButton: any;
+  university: University;
+  universityId: number;
 
-  isVisibleProgramPopup = false;
+  selectedUProgram: UProgram;
+  similarCProgram: CProgram;
 
-  universityId = -1;
-  programId: any;
+  addProgramButton: any = {
+    icon: 'plus',
+    type: 'default',
+    onClick: () => {
+      this.isVisibleProgramPopup = true;
+    }
+  };
+
+  submitButtonOptions: any = {
+    text: 'Create',
+    type: 'success',
+    useSubmitBehavior: true,
+    width: 120
+  };
+
+  programForm: any = {}
+  isVisibleProgramPopup: boolean = false;
 
   constructor(
-    private cProgramService: ProgramService,
+    private cProgramService: CProgramService,
     private uProgramService: UProgramService,
+    private universityService: UniversityService,
     private authService: AuthService,
-    private chartService: ChartService
+    private tableService: TableService,
+    private sessionService: SessionService,
+    private translateService: TranslateConfigService
   ) {
-    this.addProgramButton = {
-      icon: "plus",
-      type: "default",
-      onClick: () => {
-        this.isVisibleProgramPopup = true;
-      }
-    };
+    this.translateService.get('user.home.newProgramFormSubmitButton').subscribe(
+      (text: string) => { this.submitButtonOptions.text = text }
+    );
   }
 
   ngOnInit(): void {
-    this.universityId  = this.authService.universityId;
+    let observables: Observable<any>[] = [];
+    this.universityId = this.authService.universityId;
 
-    this.uProgramService.readByUniversity(this.universityId).then(
-      response => { this.uProgramPD = response; }
-    );
+    observables.push(this.cProgramService.readAll());
+    observables.push(this.uProgramService.readByUniversity(this.universityId));
+    observables.push(this.universityService.read(this.universityId));
+    observables.push(this.sessionService.readLastSelectedProgram());
 
-    this.cProgramService.readAll().then(
-      response => { this.cProgramPD = response; this.cProgramPD.push({ id: -1, name: 'Undefined' }); }
-    );
-  }
+    forkJoin(observables).subscribe(
+      ([cPrograms, uPrograms, university, lastProgram]) => {
+        this.cPrograms = <CProgram[]>cPrograms;
+        this.uPrograms = <UProgram[]>uPrograms;
+        this.university = <University>university;
+        let programId: number = lastProgram;
 
-  onRowClick(event) {
-    console.log(event)
-  }
+        this.cPrograms.unshift(new CProgram({ id: -1, name: 'Undefined' }));
 
-  onAddDKAPrefix(data) {
-    let dkaIndex = data.dkaIndex.toString();
-    let dkagIndex = data.dkagIndex.toString();
-    return 'C-' + dkagIndex + '.' + dkaIndex;
-  }
-
-  onAddDKAGPrefix(data) {
-    let dkagIndex = data.dkagIndex;
-    return 'C-' + dkagIndex + ' ' + data.dkagTitle;
-  }
-
-
-  onProgramSelected(e) {
-    console.log(e.value.id)
-    this.chartDS = this.genDataSource(e.value.id.toString());
-  }
-
-  programForm: any = {}
-
-  onSubmitProgram() {
-    this.programForm['universityId'] = this.universityId;
-    this.uProgramService.create(this.programForm).then(
-      reponse => {
-        this.isVisibleProgramPopup = false;
-        this.uProgramPD.push(reponse);
-        this.programId = reponse.id;
+        if (programId != null) {
+          this.selectProgram(programId);
+        }
       }
     );
   }
 
-  genDataSource(uProgramId: any) {
+  onSelectedProgram(e): void {
+    this.selectProgram(e.value.id);
+  }
+
+  selectProgram(uProgramId: number): void {
+    this.selectedUProgram = this.uPrograms.find(program => program.id == uProgramId);
+    this.sessionService.updateLastSelectedProgram(uProgramId).subscribe();
+    this.cProgramService.read(uProgramId).subscribe(
+      (program: CProgram) => { this.similarCProgram = program }
+    );
+    this.tableDS = this.constructTableDS(uProgramId);
+  }
+
+  onSubmitProgram(e): void {
+    e.preventDefault();
+    this.programForm['universityId'] = this.universityId;
+    this.uProgramService.create(this.programForm).subscribe(
+      (program: UProgram) => {
+        this.isVisibleProgramPopup = false;
+        this.uPrograms.push(program);
+        this.selectProgram(program.id);
+        this.programForm = {}
+      }
+    );
+  }
+
+  constructTableDS(uProgramId: any): DataSource {
     return new DataSource({
       key: 'id',
-      sort: [
-        { selector: "dkagIndex", desc: false }
-      ],
+      sort: [{ selector: 'dkagIndex', desc: false }],
       load: () => {
-        return this.chartService.readByUProgram(uProgramId).then(
-          response => {
-            return { data: response };
+        return this.tableService.readByUProgram(uProgramId).toPromise().then(
+          (weights: UWeight[]) => {
+            return { data: weights };
           }
         );
       },
-      update: (id, values) =>  {
-        return this.chartService.updateUWeight(id, values);
+      update: (id, values) => {
+        if (values.value < 0) {
+          values.value = 0
+        }
+        if (values.value > 5) {
+          values.value = 5
+        }
+        return this.tableService.updateUWeight(id, values).toPromise();
       }
     });
   }
