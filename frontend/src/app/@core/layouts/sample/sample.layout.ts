@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-sample-layout',
@@ -6,8 +6,6 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./sample.layout.scss']
 })
 export class SampleComponent implements OnInit {
-
-  @Input() navItems: any;
 
   constructor() { }
 
