@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
-  constructor() { }
+  userData: any = { };
+
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  onCredentialComplete() {
+    let encodedData = encodeURIComponent(JSON.stringify(this.userData));
+    this.router.navigate(['/auth/register'], {queryParams: { userData: encodedData }});
   }
 
 }
