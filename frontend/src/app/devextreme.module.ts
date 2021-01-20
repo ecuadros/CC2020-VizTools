@@ -9,6 +9,7 @@ import {
   DxNavBarModule,
   DxNumberBoxModule,
   DxSelectBoxModule,
+  DxTextBoxModule,
   DxTemplateModule,
   DxFileUploaderModule,
   DxTreeViewModule,
@@ -16,7 +17,8 @@ import {
   DxPopoverModule,
   DxScrollViewModule,
   DxToolbarModule,
-  DxPolarChartModule
+  DxPolarChartModule,
+  DxValidatorModule
 } from 'devextreme-angular';
 
 @NgModule({
@@ -30,6 +32,7 @@ import {
     DxBoxModule,
     DxDataGridModule,
     DxNavBarModule,
+    DxTextBoxModule,
     DxTemplateModule,
     DxFileUploaderModule,
     DxTreeViewModule,
@@ -39,7 +42,8 @@ import {
     DxFormModule,
     DxScrollViewModule,
     DxToolbarModule,
-    DxPolarChartModule
+    DxPolarChartModule,
+    DxValidatorModule
   ],
   exports: [
     DxButtonModule,
@@ -51,6 +55,7 @@ import {
     DxBoxModule,
     DxDataGridModule,
     DxNavBarModule,
+    DxTextBoxModule,
     DxTemplateModule,
     DxFileUploaderModule,
     DxTreeViewModule,
@@ -60,7 +65,8 @@ import {
     DxFormModule,
     DxScrollViewModule,
     DxToolbarModule,
-    DxPolarChartModule
+    DxPolarChartModule,
+    DxValidatorModule
   ]
 })
 export class DevExtremeModule { }
