@@ -1,0 +1,14 @@
+<b translate>shared.dropdownListComputingProgram.title</b>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="row">
+      <div class="col-md-auto subtitle" translate>shared.dropdownListComputingProgram.programLabel</div>
+      <div class="col-sm select-box">
+        <dx-select-box [items]="programs" displayExpr="name" (onValueChanged)="onSelectedProgram($event)"
+          [searchEnabled]="true" [(value)]="selectedProgram"
+          [placeholder]="'shared.dropdownListComputingProgram.programPlaceholder' | translate">
+        </dx-select-box>
+      </div>
+    </div>
+  </div>
+</div>
