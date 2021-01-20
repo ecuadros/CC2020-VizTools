@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateConfigService } from '../../shared/services';
 
 @Component({
   selector: 'app-footer',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  languages: any[];
+
+  selectedLanguage: any;
+
+  constructor(
+    private translateService: TranslateConfigService
+  ) {
+    this.languages = this.translateService.languages;
+    let currentLang = this.translateService.currentLang;
+    this.selectedLanguage = this.languages.find(item => item.lang == currentLang);
+  }
 
   ngOnInit(): void {
+  }
+
+  onSelectedLanguage() {
+    this.translateService.changeLang(this.selectedLanguage.lang);
+    window.location.reload();
   }
 
 }

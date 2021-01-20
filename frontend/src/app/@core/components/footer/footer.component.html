@@ -1,3 +1,16 @@
-<footer class="footer container-fluid">
-  <p>Copyright © CC2020</p>
+<footer class="footer">
+  <div class="container">
+    <div class="row footer-row ">
+      <div class="col-sm-4">
+        <dx-select-box [items]="languages" displayExpr="name" (onValueChanged)="onSelectedLanguage()"
+          [(value)]="selectedLanguage">
+        </dx-select-box>
+      </div>
+      <div class="col-sm-4">
+        <div class="text-center p-3">Copyright © CC2020</div>
+      </div>
+      <div class="col-sm-4">
+      </div>
+    </div>
+  </div>
 </footer>
