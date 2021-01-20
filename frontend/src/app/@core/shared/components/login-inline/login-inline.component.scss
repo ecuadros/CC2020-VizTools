@@ -1,0 +1,48 @@
+:host {
+  display: flex;
+}
+
+dx-text-box {
+  margin-right: 10px;
+}
+
+dx-button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+form {
+  margin-left: 10px;
+}
+
+form ::ng-deep .dx-button {
+  width: 100%;
+}
+
+form ::ng-deep .dx-texteditor-input {
+  min-height: 40px;
+}
+
+form ::ng-deep .dx-button-has-text .dx-button-content {
+  padding-top: 10px;
+  min-height: 40px;
+  font-size: 1rem;
+}
+
+@media (max-width: 992px) {
+  :host {
+    display: block;
+  }
+  
+  form {
+      margin-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  dx-text-box {
+        margin-right: 0;
+        margin-bottom: 10px;
+        width: 100%;
+  }
+}

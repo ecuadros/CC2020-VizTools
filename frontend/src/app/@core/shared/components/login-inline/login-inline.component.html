@@ -1,0 +1,24 @@
+<app-alert></app-alert>
+<form (submit)="onLogin($event)" class="form-inline my-2 my-lg-0">
+  <dx-text-box [placeholder]="'auth.login.emailField' | translate" [(value)]="formData.email">
+    <dx-validator>
+      <dxi-validation-rule type="required"
+        [message]="'auth.typeValidationRequired' | translate:{'field': ('auth.login.emailField' | translate)}">
+      </dxi-validation-rule>
+      <dxi-validation-rule type="email" [message]="'auth.emailTypeValidationEmail' | translate">
+      </dxi-validation-rule>
+    </dx-validator>
+  </dx-text-box>
+  <dx-text-box [placeholder]="'auth.login.passwordField' | translate" mode="password" [(value)]="formData.password">
+    <dx-validator>
+      <dxi-validation-rule type="required"
+        [message]="'auth.typeValidationRequired' | translate:{'field': ('auth.login.passwordField' | translate)}">
+      </dxi-validation-rule>
+      <dxi-validation-rule type="stringLength" [min]="6" [max]="18"
+        [message]="'auth.passwordTypeValidationLength' | translate">
+      </dxi-validation-rule>
+    </dx-validator>
+  </dx-text-box>
+  <dx-button [text]="'auth.login.loginButton' | translate" type="default" [width]="120" [useSubmitBehavior]="true">
+  </dx-button>
+</form>
