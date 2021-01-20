@@ -1,0 +1,144 @@
+{
+    "navbar": {
+        "homeRoute": "Inicio",
+        "loginRoute": "Iniciar sesión",
+        "registerRoute": "Registrarse",
+        "userCompareToolRoute": "Comparar Programas",
+        "adminCompareToolRoute": "Comparar Programas",
+        "logoutRoute": "Cerrar sesión"
+    },
+    "auth": {
+        "typeValidationRequired": "{{field}} es requerido",
+        "typeValidationOnlyText": "No usar digitos en el campo {{field}}",
+        "emailTypeValidationEmail": "La dirección de correo electrónico es inválida",
+        "emailRegisteredTypeValidationAsync": "Este correo ya se encuentra registrado",
+        "emailNotRegisteredTypeValidationAsync": "Este correo no se encuentra registrado",
+        "passwordTypeValidationLength": "La contraseña debe tener al menos 6 símbolos y un máximo de 18",
+        "confirmPasswordTypeValidationCompare": "Las contraseñas con coinciden",
+        "login": {
+            "title": "Iniciar sesión",
+            "emailField": "Correo electrónico",
+            "passwordField": "Contraseña",
+            "loginButton": "Ingresar",
+            "anotherAction": "¿No tienes una cuenta?",
+            "registerLink": "Registrate",
+            "errorUnauthorizedMessage": "Correo electrónico o contraseña inválidos",
+            "errorNotActivatedMessage": "Esta cuenta no está activada",
+            "resendLink": "Reenviar email"
+        },
+        "register": {
+            "title": "Registrarse",
+            "firstNameField": "Nombres",
+            "lastNameField": "Apellidos",
+            "emailField": "Correo electrónico",
+            "passwordField": "Contraseña",
+            "confirmPasswordField": "Confirmar contraseña",
+            "nextButton": "Siguiente",
+            "anotherAction": "¿Ya tienes una cuenta?",
+            "loginLink": "Ingresar",
+            "userGroupTitle": "Informacion del usuario",
+            "userCountryField": "País",
+            "userCountryPlaceholder": "Elige un país...",
+            "userCityField": "Ciudad",
+            "userStateField": "Estado / Provincia / Región",
+            "userZipCodeField": "Zip Code",
+            "userPhoneField": "Código postal",
+            "userPhoneHelpText": "Ingrese el número de teléfono en formato de EE.UU.",
+            "userPhoneTypeValidationPattern": "El número de teléfono debe tener el formato EE.UU.",
+            "universityGroupTitle": "Información de la universidad / colegio / institución",
+            "universityCountryField": "País de la institución",
+            "universityCountryPlaceholder": "Elige un país...",
+            "universityNameField": "Nombre de la Institución",
+            "universityNamePlaceholder": "Elija o registre una nueva institución...",
+            "universityPositionField": "Posición",
+            "universityDomainField": "Dominio",
+            "universityAcronymField": "Acrónimo",
+            "agreementMessage": "Estoy de acuerdo con los términos y condiciones",
+            "agreementMessageTypeValidationCompare": "Debe aceptar los Términos y Condiciones",
+            "backButton": "Atrás",
+            "registerButton": "Registrarse",
+            "loadingMessage": "Cargando...",
+            "successMessage": "Gracias por registrarse con nosotros. Se ha enviado un correo electrónico para activar su cuenta"
+        },
+        "activateAccount": {
+            "title": "Activar la cuenta",
+            "loadingMessage": "Cargando...",
+            "successMessage": "La cuenta ha sido activada",
+            "failureMessage": "El token no es válido o ha caducado"
+        },
+        "resendEmail": {
+            "title": "Reenviar email",
+            "emailField": "Correo electrónico",
+            "confirmEmailField": "Confirmar correo electrónico",
+            "resendButton": "Reenviar",
+            "loadingMessage": "Cargando...",
+            "successMessage": "Se ha enviado un correo electrónico para activar su cuenta",
+            "failureMessage": "Esta cuenta ya está activada"
+        }
+    },
+    "user": {
+        "home": {
+            "programToolbarLabel": "Programa",
+            "programNameLabel": "Nombre del programa:",
+            "programAcronymLabel": "Acrónimo:",
+            "programSimilarProgramLabel": "Similar a:",
+            "programUniversityLabel": "Institución:",
+            "programCountryLabel": "País:",
+            "gridIndexTitle": "Índice",
+            "gridDKATitle": "Discipline Knowledge Area",
+            "gridValueTitle": "Valor",
+            "newProgramFormTitle": "Nuevo Programa",
+            "newProgramFormNameField": "Nombre: (ej. Escuela de Computación)",
+            "newProgramFormAcronymField": "Acrónimo: (ej. SC)",
+            "newProgramFormSimilarProgramField": "Programa similar",
+            "newProgramFormSimilarProgramFieldExplained": "Según CC2020 este programa es más similar a",
+            "newProgramFormSimilarProgramPlaceholder": "Seleccione un programa",
+            "newProgramFormSubmitButton": "Crear",
+            "typeValidationRequired": "{{field}} es requerido"
+        }
+    },
+    "admin": {
+        "home": {
+            "programToolbarLabel": "Programa",
+            "programTreeDropdownLabel": "Programas CC2020",
+            "programTreeDropdownPlaceholder": "Programas CC2020",
+            "gridIndexTitle": "Índice",
+            "gridDKATitle": "Discipline Knowledge Area",
+            "gridMinTitle": "Min",
+            "gridMaxTitle": "Max",
+            "gridNewProgramLabel": "(nuevo)",
+            "updateDKAGFormTitle": "Actualizar DKAG",
+            "updateDKAGFormNameField": "Nombre",
+            "updateDKAGFormSubmitButton": "Save",
+            "newProgramFormTitle": "Nuevo Programa",
+            "newProgramFormNameField": "Nombre",
+            "newProgramFormAcronymField": "Acrónimo",
+            "newProgramFormSubmitButton": "Crear",
+            "typeValidationRequired": "{{field}} es requerido"
+        }
+    },
+    "shared": {
+        "dropdownListComputingProgram": {
+            "title": "Compare con los programas CC2020:",
+            "programLabel": "Programa:",
+            "programPlaceholder": "Seleccione un programa"
+        },
+        "dropdownListUniversityProgram": {
+            "title": "Comparar con otras instituciones:",
+            "countryLabel": "País:",
+            "countryPlaceholder": "Seleccione un país",
+            "universityLabel": "Institución:",
+            "universityPlaceholder": "Seleccione una institución",
+            "programLabel": "Programa:",
+            "programPlaceholder": "Seleccione un programa"
+        },
+        "dropdownListUserProgram": {
+            "title": "Compare con los programas de su institución:",
+            "programLabel": "Programa:",
+            "programPlaceholder": "Seleccione un programa"
+        },
+        "shareLink": {
+            "label": "Compartir gráfico"
+        }
+    }
+}
