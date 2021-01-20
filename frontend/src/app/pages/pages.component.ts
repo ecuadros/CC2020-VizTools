@@ -7,25 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PagesComponent implements OnInit {
 
-  navItems: any = null;
-
-  constructor() {
-    this.navItems = {
-      path: 'auth',
-      children: [
-        {
-          name: 'Login',
-          path: 'login',
-          status: false
-        },
-        {
-          name: 'Register',
-          path: 'register',
-          status: false
-        }
-      ]
-    }
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }

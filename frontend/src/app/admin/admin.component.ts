@@ -7,20 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  navItems: any = null;
-
-  constructor() {
-    this.navItems = {
-      path: 'admin',
-      children: [
-        {
-          name: '',
-          path: '',
-          status: false
-        }
-      ]
-    }
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }
