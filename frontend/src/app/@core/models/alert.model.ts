@@ -5,6 +5,9 @@ export class Alert {
   autoClose: boolean;
   keepAfterRouteChange: boolean;
   fade: boolean;
+  linkLabel: string;
+  linkUrl: string;
+  linkParams: any;
 
   constructor(init?:Partial<Alert>) {
       Object.assign(this, init);
