@@ -4,22 +4,28 @@ import { AdminComponent } from './admin.component';
 import { DevExtremeModule } from 'devextreme-angular';
 import { AdminRoutingModule } from './admin-routing.module';
 import { CoreModule } from '../@core/core.module';
-import { LandingComponent } from './landing/landing.component';
 import { WeightComponent } from './weight/weight.component';
+import { CompareToolComponent } from './compare-tool/compare-tool.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TranslateModule } from '@ngx-translate/core';
+import { MultiprogramGridComponent } from './weight/multiprogram-grid/multiprogram-grid.component';
 
 
 
 @NgModule({
   declarations: [
     AdminComponent,
-    LandingComponent,
-    WeightComponent
+    WeightComponent,
+    CompareToolComponent,
+    MultiprogramGridComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     CoreModule,
-    DevExtremeModule
+    DevExtremeModule,
+    FontAwesomeModule,
+    TranslateModule
   ]
 })
 export class AdminModule { }
