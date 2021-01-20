@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import DataSource from 'devextreme/data/data_source';
-import { ChartService, DKAGService, DKAService, ProgramService } from 'src/app/@core/services';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { forkJoin, Observable } from 'rxjs';
+import { TableService, DKAService, CProgramService, SessionService, TranslateConfigService } from 'src/app/@core/shared/services';
+import { CProgram, CWeight, DKA, Series } from 'src/app/@core/models';
+import { MultiprogramGridComponent } from './multiprogram-grid/multiprogram-grid.component';
 
 @Component({
   selector: 'app-weight',
@@ -9,222 +11,111 @@ import { ChartService, DKAGService, DKAService, ProgramService } from 'src/app/@
 })
 export class WeightComponent implements OnInit {
 
-  dkaPD = [];
-  dkagPD = [];
+  dkas: DKA[] = [];
+  cPrograms: CProgram[] = [];
 
-  programPD: any[];
+  selectedPrograms: CProgram[] = [];
+  selectedCProgram: CProgram = new CProgram({name: ''});
 
-  chartDS: any = {}
-  chartPD: any = {}
+  programBoxValue = [];
 
-  programSelected = {};
-  addProgramButton: any;
+  series: Series[] = [];
 
-  isVisibleDKAGPopup: boolean = false;
-  isVisibleProgramPopup: boolean = false;
+  programFormData: CProgram = new CProgram();
+  programFormVisible: boolean = false;
+
+  addProgramButton: any = {
+    icon: 'plus',
+    type: 'default',
+    onClick: () => {
+      this.programFormVisible = true;
+    }
+  };
+
+  submitButtonOptions: any = {
+    text: 'Create',
+    type: 'success',
+    useSubmitBehavior: true
+  };
+
+  @ViewChild(MultiprogramGridComponent) multiprogramGrid;
 
   constructor(
     private dkaService: DKAService,
-    private dkagService: DKAGService,
-    private programService: ProgramService,
-    private chartService: ChartService) {
-    this.addProgramButton = {
-      icon: "plus",
-      type: "default",
-      onClick: () => {
-        this.isVisibleProgramPopup = true;
-      }
-    };
+    private cProgramService: CProgramService,
+    private sessionService: SessionService,
+    private tableService: TableService,
+    private translateService: TranslateConfigService
+  ) {
+    this.translateService.get('admin.home.newProgramFormSubmitButton').subscribe(
+      (text: string) => { this.submitButtonOptions.text = text }
+    );
   }
 
-  ngOnInit() {
-    this.dkagService.readAll().then(
-      response => { this.dkagPD = response }
-    );
+  ngOnInit(): void {
+    let observables: Observable<any>[] = [];
 
-    this.dkaService.readAll().then(
-      response => { this.dkaPD = response; }
-    );
+    observables.push(this.dkaService.readAll());
+    observables.push(this.cProgramService.readAll());
 
-    this.programService.readAll().then(
-      response => {
-        let programPromises = [];
+    forkJoin(observables).subscribe(
+      ([dkas, programs]) => {
+        this.dkas = <DKA[]>dkas;
+        this.cPrograms = <CProgram[]>programs;
 
-        response[0]['selected'] = true;
-
-        for (let i = 1; i < response.length; i++) {
-          response[i]['selected'] = true;
-          programPromises.push(this.chartService.readByProgram(response[i].id.toString()))
-        }
-
-        Promise.all(programPromises).then(values => {
-          for (let val of values) {
-            this.selectedPrograms.push({
-              id: val[0].programId,
-              data: val,
-              name: val[0].programTitle
-            });
-          }
-          
-          this.chartDS = this.genDataSource(response[0].id);
-          this.programPD = response;
+        this.cPrograms.forEach(program => {
+          program['selected'] = true;
+          this.programBoxValue.push(program.id);
+          this.selectedPrograms.push(program);
         })
-      });
+
+        this.sessionService.readLastSelectedProgram().subscribe(
+          (programId: number) => {
+            this.selectedCProgram = this.cPrograms.find(program => program.id == programId);
+            this.updateGraph(programId);
+          }
+        );
+
+        this.multiprogramGrid.constructTable();
+      }
+    );
   }
 
-  onProgramSelected(e) {
-    this.programSelected = e.value;
-    let programId = e.value.id
-    this.chartService.readByProgram(programId).then(
-      response => { this.chartPD = response }
-    )
+  onSelectedProgram(program: CProgram): void {
+    this.updateGraph(program.id);
   }
 
-  onAddProgram(e) {
-  }
-
-  onRowUpdated(e) {
-  }
-
-  onRowUpdating(options) {
-    options.newData = Object.assign(options.oldData, options.newData);
-  }
-
-
-  dkagIdSelected: number;
-  dkagForm: any = {};
-
-  syncProgramViewSelection($event) {
-
-  }
-
-  onRowClick(event) {
-    console.log(event)
-    if (event.data.items == null) return;
-    this.dkagIdSelected = this.dkagPD.findIndex(dkag => dkag.id === event.data.items[0].dkagId)
-    let dkagSelected = this.dkagPD[this.dkagIdSelected]
-    this.dkagForm = { name: dkagSelected.name }
-    this.isVisibleDKAGPopup = true;
-  }
-
-  programForm: any = {}
-
-
-
-  /*
-   * Prefix Functions
-   */
-
-  onAddDKAPrefix(data) {
-    let dkaIndex = data.dkaIndex.toString();
-    let dkagIndex = data.dkagIndex.toString();
-    return 'C-' + dkagIndex + '.' + dkaIndex;
-  }
-
-  onAddDKAGPrefix(data) {
-    let dkagIndex = data.dkagIndex.toString();
-    return 'C-' + dkagIndex + ' ' + data.dkagTitle;
-  }
-
-  programBoxValue: any;
-  selectedPrograms = [];
-
-  treeView_itemSelectionChanged(event) {
-    let item = event.itemData;
+  syncProgramSelectionChanged(e): void {
+    let item = e.itemData;
     if (item.selected == true) {
-      this.chartDS = this.genDataSource(item.id);
+      this.selectedPrograms.push(item);
+      this.multiprogramGrid.constructTableDS();
     } else {
       this.selectedPrograms = this.selectedPrograms.filter(program => program.id != item.id);
     }
+    this.programBoxValue = e.component.getSelectedNodeKeys();
   }
 
-  onSubmitDKAG() {
-    let dkagSelected = this.dkagPD[this.dkagIdSelected]
-    if (dkagSelected.name != this.dkagForm.name) {
-      this.dkagService.update(dkagSelected.id, this.dkagForm).then(
-        response => {
-          this.dkagPD[this.dkagIdSelected] = response
-          this.dkagPD = this.dkagPD.slice();
-          this.isVisibleDKAGPopup = false;
-        }
-      )
-    }
-  }
+  updateGraph(programId: number): void {
+    this.selectedCProgram = this.cPrograms.find(program => program.id == programId);
+    this.sessionService.updateLastSelectedProgram(programId).subscribe();
 
-  onSubmitProgram() {
-    /** */
-  }
-
-  removeDKA(value) {
-    this.dkaService.delete(value.dkaId);
-  }
-
-  onEditorPreparing(e) {
-    console.log(e)
-  }
-
-  genDataSource(programId) {
-    return new DataSource({
-      key: 'id',
-      sort: [],
-      load: () => {
-        return this.chartService.readByProgram(programId.toString()).then(
-          (response: any[]) => {
-            this.selectedPrograms.push({ id: programId, name: response[0].programTitle, data: response });
-            let emptyRows = this.createEmptyRows(response);
-            let data = response.concat(emptyRows);
-            return { data: this.insertAttr(data) };
-          }
-        );
-      },
-      update: (id, values) => {
-        if (id == -1 && values.dkaTitle != '(new)') {
-          let data = {
-            name: values.dkaTitle,
-            index: values.dkaIndex,
-            dkagId: values.dkagId
-          }
-          return this.dkaService.create(data);
-        }
-        return this.chartService.updateWeight(id, values);
+    this.tableService.readByCProgram(programId).subscribe(
+      (weights: CWeight[]) => {
+        this.series = [new Series(this.selectedCProgram, weights, '#000fff')];
       }
-    });
+    );
   }
 
-  createEmptyRows(data) {
-    let filtered = []
-    let emptyRows = []
-    for (let dkag of this.dkagPD) {
-      filtered = data.filter(row => row.dkagId == dkag.id).slice();
-      emptyRows.push({
-        id: -1,
-        dkagId: dkag.id,
-        dkaId: -1,
-        dkagTitle: dkag.name,
-        dkaTitle: '(new)',
-        dkagIndex: dkag.index,
-        dkaIndex: filtered.length + 1,
-      })
-    }
-    return emptyRows;
-  }
-
-  insertAttr(data) {
-    let t_row, programId;
-    for (let row of data) {
-      for (let program of this.selectedPrograms) {
-        t_row = program.data.find(x => x.dkaId == row.dkaId);
-        if (t_row != undefined && t_row.id != -1) {
-          programId = t_row.programId.toString();
-          row[programId + '_min'] = t_row.min;
-          row[programId + '_max'] = t_row.max;
-        } else {
-          programId = program.data[0].programId.toString();
-          row[programId + '_min'] = 0;
-          row[programId + '_max'] = 0;
-        }
+  onCreateProgram(e): void {
+    e.preventDefault();
+    this.cProgramService.create(this.programFormData).subscribe(
+      (program: CProgram) => {
+        this.cPrograms.push(program);
+        this.programFormVisible = false;
+        this.programFormData = new CProgram();
       }
-    }
-    return data;
+    );
   }
+
 }

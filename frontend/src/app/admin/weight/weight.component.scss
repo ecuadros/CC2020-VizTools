@@ -1,26 +1,4 @@
-#chart {
-  height: 600px;
-}
-
-.new-cell {
-  font-style: italic;
-  opacity: 0.5;
-}
-
-.dka-cell {
-  display: flex;
-}
-
-.trash {
-  display: none;
-  margin-left: 10px;
-}
-
-.dka-cell:hover .trash {
-  display: block;
-}
-
-.trash-icon {
-  font-size: 18px;
-  text-decoration: none;
+.programs-tree-dropdown {
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
