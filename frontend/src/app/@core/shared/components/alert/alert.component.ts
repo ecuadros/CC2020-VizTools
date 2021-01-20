@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { Alert, AlertType } from '../../models';
+import { Alert, AlertType } from '../../../models';
 import { AlertService } from '../../services';
 
 @Component({
@@ -21,7 +21,7 @@ export class AlertComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router, private alertService: AlertService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     this.alertSubscription = this.alertService.onAlert(this.id)
       .subscribe(alert => {
