@@ -1,3 +1,7 @@
+.navbar {
+    background-color: white;
+}
+
 .user-action {
     display: flex;
     text-decoration: none;
@@ -9,12 +13,7 @@
     text-align: right;
 }
 
-.user-info .university {
-    margin: 0;
-    font-size: 0.8rem;
-}
-
-.user-info .email {
+.user-info .university, .user-info .email {
     margin: 0;
     font-size: 0.8rem;
 }
