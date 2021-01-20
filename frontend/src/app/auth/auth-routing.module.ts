@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ActivateAccountComponent } from './activate-account/activate-account.component';
+import { ResendEmailComponent } from './resend-email/resend-email.component';
 import { AuthGuard } from '../@core/guards';
 
 const routes: Routes = [{
@@ -17,6 +19,14 @@ const routes: Routes = [{
     {
       path: 'register',
       component: RegisterComponent,
+    },
+    {
+      path: 'activate-account/:token',
+      component: ActivateAccountComponent,
+    },
+    {
+      path: 'resend-email',
+      component: ResendEmailComponent,
     },
     {
       path: '',
