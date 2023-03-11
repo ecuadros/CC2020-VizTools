@@ -1,7 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 @font-face {
-    font-family: Versatile;
-    src: url('/assets/fonts/Versatile-Bold.otf') format("opentype");
-    font-style: normal;
+  font-family: Versatile;
+  src: url('/assets/fonts/Versatile-Bold.otf') format("opentype");
+  font-style: normal;
 }

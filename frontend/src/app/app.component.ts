@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TranslateConfigService } from './@core/shared/services';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +6,5 @@ import { TranslateConfigService } from './@core/shared/services';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  constructor(
-    private translateService: TranslateConfigService
-  ) {
-    this.translateService.setDefaultLang('en');
-  }
-
+  title = 'viztools';
 }

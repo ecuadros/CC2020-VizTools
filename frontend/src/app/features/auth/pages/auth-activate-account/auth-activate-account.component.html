@@ -1,0 +1,23 @@
+<div class="d-flex flex-column align-items-center gap-3">
+
+  <h1 class="title">Activate Account</h1>
+
+  <ng-container [ngSwitch]="state">
+    <ng-container *ngSwitchCase="0">
+      <mat-spinner></mat-spinner>
+      <p class="loading-message">Loading...</p>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="1">
+      <mat-icon class="status-icon" style="color: #6da951;">done</mat-icon>
+      <p class="message">The account has been activated</p>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="2">
+      <mat-icon class="status-icon" style="color: #f65334;">close</mat-icon>
+      <p class="message">The token is invalid or has expired</p>
+    </ng-container>
+
+  </ng-container>
+
+</div>

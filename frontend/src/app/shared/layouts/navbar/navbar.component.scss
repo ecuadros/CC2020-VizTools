@@ -1,0 +1,161 @@
+.viztools-navbar {
+  height: auto;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.router-link-active {
+  color: #fff !important;
+  background-color: #3f51b5 !important;
+}
+
+.container-logo {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  img {
+    height: 60px;
+  }
+}
+
+.container-navbar-link {
+  ul {
+    display: flex;
+    column-gap: 40px;
+    list-style-type: none;
+    margin: 0;
+    font-weight: 400;
+
+    a {
+      text-decoration: none;
+      color: black;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+    }
+
+    a:hover,
+    a:active {
+      color: #3f51b5;
+    }
+  }
+}
+
+.container-navbar-items {
+  display: flex;
+  align-items: center;
+
+  .container-profile {
+    .container-profile-button {
+      height: 56px;
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        font-weight: 400;
+
+        li {
+          line-height: initial;
+          text-align: right;
+
+        }
+      }
+    }
+  }
+
+  .container-divider-1 {
+    height: 56px;
+  }
+
+  .container-github {
+    display: block;
+
+    mat-label {
+      display: inline-flex;
+    }
+
+    mat-icon {
+      font-size: 0.7rem;
+    }
+  }
+
+  .container-menu-button {
+    display: none;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 993px) {
+  .container-navbar-items {
+    .container-github {
+      mat-label {
+        display: none;
+      }
+
+      mat-icon {
+        height: 24px;
+        width: 24px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .viztools-navbar {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .viztools-navbar-auth {
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+
+  .container-logo {
+    margin: 0;
+
+    img {
+      height: 60px;
+    }
+  }
+
+  .container-navbar-link {
+    display: none;
+  }
+
+  .container-navbar-items {
+    display: flex;
+    flex-direction: column;
+
+    app-login {
+      width: 100%;
+    }
+
+    .container-profile {
+      display: none;
+    }
+
+    .container-divider-1 {
+      display: none;
+    }
+
+    .container-github {
+      width: 100%;
+      margin-top: 1.5rem;
+
+      mat-label {
+        display: inline-flex;
+      }
+    }
+
+    .container-github-auth {
+      display: none !important;
+    }
+
+    .container-menu-button {
+      display: block;
+    }
+  }
+}

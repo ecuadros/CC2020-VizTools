@@ -1,0 +1,187 @@
+<div class="text-center">
+  <span class="p-0 m-0 w-100 text-center h1">
+    Register
+  </span>
+  <mat-stepper #stepper linear>
+    <mat-step [stepControl]="formRegisterStep1">
+      <form [formGroup]="formRegisterStep1" autocomplete="off" class="mt-4" novalidate>
+        <div class="row">
+          <mat-form-field appearance="outline" class="col-md-6">
+            <mat-label>First Name</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput formControlName="firstName">
+            <mat-error *ngIf="formRegisterStep1.controls['firstName'].errors?.['required']">
+              First Name is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-md-6">
+            <mat-label>Last Name</mat-label>
+            <mat-icon matPrefix>person</mat-icon>
+            <input matInput formControlName="lastName">
+            <mat-error *ngIf="formRegisterStep1.controls['lastName'].errors?.['required']">
+              Last Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <mat-icon matPrefix>email</mat-icon>
+            <input matInput type="email" formControlName="email">
+            <mat-error *ngIf="formRegisterStep1.controls['email'].errors?.['required']">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="formRegisterStep1.controls['email'].errors?.['email']">
+              Email is not valid</mat-error>
+            <mat-error *ngIf="formRegisterStep1.controls['email'].errors?.['emailRegistered']">
+              Email already registered
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <mat-icon matPrefix>key</mat-icon>
+            <input matInput type="password" formControlName="password">
+            <mat-error *ngIf="formRegisterStep1.controls['password'].errors?.['required']">
+              Password is required
+            </mat-error>
+            <mat-error *ngIf="formRegisterStep1.controls['password'].errors?.['minlength']">
+              Password must be at least 6 characters
+            </mat-error>
+            <mat-error *ngIf="formRegisterStep1.controls['password'].errors?.['maxlength']">
+              Password must be less than 20 characters
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Confirm password</mat-label>
+            <mat-icon matPrefix>key</mat-icon>
+            <input matInput type="password" formControlName="confirmPassword">
+            <mat-error *ngIf="formRegisterStep1.controls['confirmPassword'].errors?.['required']">
+              Password is required
+            </mat-error>
+            <mat-error *ngIf="formRegisterStep1.controls['confirmPassword'].errors?.['minlength']">
+              Password must be at least 6 characters
+            </mat-error>
+            <mat-error *ngIf="formRegisterStep1.controls['confirmPassword'].errors?.['maxlength']">
+              Password must be less than 20 characters
+            </mat-error>
+            <mat-error *ngIf="formRegisterStep1.controls['confirmPassword'].errors?.['mismatch']">
+              Password must be the same
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button mat-raised-button matStepperNext color="accent" class="w-100" style="height: 46px;">Next</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="formRegisterStep2">
+      <form [formGroup]="formRegisterStep2" (ngSubmit)="onRegister()" autocomplete="off" class="mt-4" novalidate>
+        <div class="row mb-4">
+          <div class="col-12 text-start">
+            <span class="p-0 m-0 w-100 h5 font-weight-normal">User Information</span>
+          </div>
+        </div>
+        <div class="row">
+          <mat-form-field appearance="outline" class="col-md-6">
+            <mat-label>Country</mat-label>
+            <mat-icon matPrefix>flag</mat-icon>
+            <mat-select formControlName="countryId">
+              <mat-option *ngFor="let country of countries" [value]="country.id">
+                {{country.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formRegisterStep2.controls['countryId'].errors?.['required']">
+              Country is required</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-md-6">
+            <mat-label>City</mat-label>
+            <mat-icon matPrefix>apartment</mat-icon>
+            <input matInput formControlName="city">
+            <mat-error *ngIf="formRegisterStep2.controls['city'].errors?.['required']">
+              City is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row mt-4 mb-4">
+          <div class="col-12 text-start">
+            <span class="p-0 m-0 w-100 h5 font-weight-normal">University / College / Institution Information</span>
+          </div>
+        </div>
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Institution Name</mat-label>
+            <mat-icon matPrefix>school</mat-icon>
+            <input type="text" matInput formControlName="institution" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption
+              (optionSelected)="onInstitutionSelected($event)" [displayWith]="onInstitutionDisplay">
+              <mat-option *ngFor="let institution of filteredInstitutions | async" [value]="institution">
+                <ng-container *ngIf="institution.id == -1">
+                  <span class="fst-italic">new: </span>
+                </ng-container>
+                {{institution.name}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="formRegisterStep2.controls['institution'].errors?.['required']">
+              Institution is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field appearance="outline" class="col-md-6">
+            <mat-label>URL</mat-label>
+            <mat-icon matPrefix>link</mat-icon>
+            <input matInput formControlName="url">
+            <span matTextPrefix>https://&nbsp;</span>
+            <mat-error *ngIf="formRegisterStep2.controls['url'].errors?.['required']">
+              URL is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-md-6">
+            <mat-label>Acronym</mat-label>
+            <mat-icon matPrefix>abc</mat-icon>
+            <input matInput formControlName="acronym">
+            <mat-error *ngIf="formRegisterStep2.controls['acronym'].errors?.['required']">
+              Acronym is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Occupation</mat-label>
+            <mat-icon matPrefix>work</mat-icon>
+            <input matInput formControlName="occupation">
+            <mat-error *ngIf="formRegisterStep2.controls['occupation'].errors?.['required']">
+              Occupation is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <button mat-raised-button matStepperPrevious class="w-100" style="height: 46px;">Back</button>
+          </div>
+          <div class="col-md-6 register-button">
+            <button mat-raised-button color="primary" class="w-100" style="height: 46px;">Register</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px;">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="height: 120px;">
+          <mat-icon style="color: #3f51b5; transform: scale(5);">email</mat-icon>
+        </div>
+        <div>
+          <span>
+            Thank you for registering with us. An email has been sent to activate your account.
+          </span>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

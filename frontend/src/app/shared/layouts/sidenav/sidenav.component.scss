@@ -1,0 +1,111 @@
+.container-sidenav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .container-sidenav-items {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    .container-profile {
+      height: 56px;
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        font-weight: 400;
+
+        li {
+          line-height: initial;
+          text-align: right;
+
+        }
+      }
+    }
+
+    .container-navbar-link {
+      ul {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        font-weight: 400;
+
+        a {
+          width: 100%;
+          text-decoration: none;
+          color: black;
+          padding: 0.5rem 0.75rem;
+          border-radius: 0.5rem;
+          text-align: center;
+          justify-content: center;
+        }
+
+        a:hover,
+        a:active {
+          color: #3f51b5;
+        }
+      }
+    }
+
+    .container-github {
+      display: block;
+
+      mat-label {
+        display: inline-flex;
+      }
+
+      mat-icon {
+        font-size: 0.7rem;
+      }
+    }
+
+    .container-logout {
+      margin-top: auto;
+
+      button {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        padding: 0.5rem 0.75rem;
+        border-radius: 0.5rem;
+        background-color: #3f51b5;
+        color: white;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .container-sidenav-content {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+
+    .viztools-navbar {
+      height: auto;
+      justify-content: space-between;
+      background-color: white;
+
+      .container-logo {
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+
+        img {
+          height: 60px;
+        }
+      }
+    }
+  }
+}
+
+.router-link-active {
+  color: #fff !important;
+  background-color: #3f51b5 !important;
+}

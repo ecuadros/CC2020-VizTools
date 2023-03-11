@@ -4,14 +4,34 @@
     "outDir": "./out-tsc/app",
     "types": [],
     "paths": {
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@features/*": [
+        "src/app/features/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@facades/*": [
+        "src/app/facades/*"
+      ],
+      "@store/*": [
+        "src/app/store/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ],
       "jszip": [
         "node_modules/jszip/dist/jszip.min.js"
       ]
     }
   },
   "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
+    "src/main.ts"
   ],
   "include": [
     "src/**/*.d.ts"

@@ -1,0 +1,17 @@
+.container-link-input {
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-share-link {
+    .container-share-link-items {
+      margin-bottom: 0.75rem;
+
+      .share-link-button {
+        min-height: 2.5rem;
+      }
+    }
+  }
+}

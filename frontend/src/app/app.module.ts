@@ -1,23 +1,16 @@
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-
-import { ChartsModule } from 'ng2-charts'
+import { CoreModule } from '@core/core.module';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { appEffects, appReducer } from '@store/index';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DevExtremeModule } from './devextreme.module';
-import { CoreModule } from './@core/core.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
-export function rootLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
-}
+
 
 @NgModule({
   declarations: [
@@ -26,22 +19,11 @@ export function rootLoaderFactory(http: HttpClient): TranslateHttpLoader {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
     AppRoutingModule,
-    DevExtremeModule,
-    NgxSpinnerModule,
-    ChartsModule,
-    FontAwesomeModule,
-    CoreModule.forRoot(),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: rootLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+    HttpClientModule,
+    CoreModule,
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot(appEffects)
   ],
   providers: [],
   bootstrap: [AppComponent]

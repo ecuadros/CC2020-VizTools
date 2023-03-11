@@ -1,0 +1,49 @@
+.login-field {
+  margin-right: 0.5rem;
+}
+
+.login-button {
+  height: 56px;
+
+  mat-label {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 993px) {
+  .login-button {
+    mat-label {
+      display: none;
+    }
+
+    mat-icon {
+      height: 24px;
+      width: 24px;
+      margin: 0;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .form-login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login-field {
+    width: 100%;
+    margin-top: 0;
+    margin-right: 0.5rem;
+    margin-right: 0;
+  }
+
+  .login-button {
+    width: 100%;
+
+    mat-label {
+      display: inline-flex;
+    }
+  }
+}

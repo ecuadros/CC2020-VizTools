@@ -1,0 +1,9 @@
+<mat-form-field class="select-search" appearance="outline" (click)="focusIn($event)">
+  <mat-label>{{label}}</mat-label>
+  <input matInput type="text" spellcheck="false" [matAutocomplete]="auto" [formControl]="control" (focusout)="focusOut($event)">
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)='optionSelected($event)'>
+    <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+      {{option.name}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

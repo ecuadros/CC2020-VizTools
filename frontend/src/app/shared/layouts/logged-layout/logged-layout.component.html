@@ -1,0 +1,13 @@
+<div class="container-layout">
+  <ng-container *ngIf="!mobileQuery.matches">
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </ng-container>
+  <ng-container *ngIf="mobileQuery.matches">
+    <app-sidenav>
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </app-sidenav>
+  </ng-container>
+</div>

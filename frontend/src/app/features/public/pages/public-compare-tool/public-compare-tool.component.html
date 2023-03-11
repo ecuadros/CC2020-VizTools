@@ -1,0 +1,44 @@
+<div class="container pt-4">
+  <div class="row">
+    <mat-card class="mb-2" *ngIf="selectedDisciplines.length>0">
+      <mat-card-header>
+        <mat-card-title>CC2020 Programs</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let discipline of selectedDisciplines">
+            <div class="d-flex align-items-center gap-3">
+              <ngx-colors ngx-colors-trigger [palette]="colorPalette" [(ngModel)]="discipline.color"
+                (change)="onColorSelectedChange()"></ngx-colors>
+              {{ discipline.formattedName }}
+            </div>
+          </mat-chip>
+        </mat-chip-listbox>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="mb-2" *ngIf="selectedPrograms.length>0">
+      <mat-card-header>
+        <mat-card-title>Institution programs</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let program of selectedPrograms">
+            <div class="d-flex align-items-center gap-3">
+              <ngx-colors ngx-colors-trigger [palette]="colorPalette" [(ngModel)]="program.color"
+                (change)="onColorSelectedChange()"></ngx-colors>
+              {{ program.formattedName }}
+            </div>
+          </mat-chip>
+        </mat-chip-listbox>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <mat-card class="mb-4 p-4">
+      <app-line-chart [series$]="series$"></app-line-chart>
+    </mat-card>
+  </div>
+</div>

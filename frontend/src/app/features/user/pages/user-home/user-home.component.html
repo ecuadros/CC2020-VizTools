@@ -1,0 +1,148 @@
+<div class="container">
+  <div class="row">
+    <mat-card class="my-4">
+      <mat-card-content>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="d-flex align-items-center" style="font-size: 20px; font-weight: 500;">
+              <div class="d-flex justify-content-center align-items-center"
+                style="border-radius: 1rem; background-color: #3f51b5; width: 30px; height: 30px; margin-right: 1rem;">
+                <div style="color: white;">1</div>
+              </div>
+              Select or create a program
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="step-1__select-toolbar d-flex justify-content-end align-items-center gap-3">
+              <app-select-search #selectSearch [label]="'Programs'" [options$]="programs$"
+                (onOptionSelected)="onProgramSelected($event)"></app-select-search>
+              <ng-container *ngIf="isProgramToolbarVisible">
+                <button mat-icon-button aria-label="Edit program" (click)="onProgramEdit()">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="Delete program" (click)="onProgramDelete()">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </ng-container>
+              <button mat-mini-fab aria-label="Create program" color="primary" (click)="onProgramCreate()">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="isProgramFormVisible">
+          <mat-divider class="my-4"></mat-divider>
+          <div>
+            <form [formGroup]="programForm" (ngSubmit)="onProgramFormSubmit()" autocomplete="off" novalidate>
+              <div class="row">
+                <mat-form-field appearance="outline" class="col-md-6">
+                  <mat-label>Name: (i.e. School of Computing)</mat-label>
+                  <mat-icon matPrefix>person</mat-icon>
+                  <input matInput formControlName="name">
+                  <mat-error *ngIf="programForm.controls['name'].errors?.['required']">Name is
+                    required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-md-6">
+                  <mat-label>Native Name: (i.e. Escuela de computación)</mat-label>
+                  <mat-icon matPrefix>person</mat-icon>
+                  <input matInput formControlName="nativeName">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-md-6">
+                  <mat-label>Acronym: (i.e. SC)</mat-label>
+                  <mat-icon matPrefix>person</mat-icon>
+                  <input matInput formControlName="acronym">
+                  <mat-error *ngIf="programForm.controls['acronym'].errors?.['required']">Acronym is
+                    required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="col-md-6">
+                  <mat-label>According to CC2020 this program is more similar to</mat-label>
+                  <mat-icon matPrefix>login</mat-icon>
+                  <mat-select formControlName="disciplineId">
+                    <mat-option *ngFor="let discipline of disciplines$ | async" [value]="discipline.id">
+                      {{discipline.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="row justify-content-end">
+                <div class="col-md-2">
+                  <button mat-stroked-button class="w-100 mb-2" (click)="onProgramFormCancel()">
+                    <mat-label>Cancel</mat-label>
+                  </button>
+                </div>
+                <div class="col-md-2">
+                  <button mat-flat-button color="primary" class="w-100">
+                    <ng-container *ngIf="programFormType === 0">
+                      <mat-label>Create</mat-label>
+                    </ng-container>
+                    <ng-container *ngIf="programFormType === 1">
+                      <mat-label>Save</mat-label>
+                    </ng-container>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="mb-4" *ngIf="programWeights$ | async">
+      <mat-card-header>
+        <mat-card-title>
+          <div class="d-flex align-items-center">
+            <div class="d-flex justify-content-center align-items-center"
+              style="border-radius: 1rem; background-color: #3f51b5; width: 30px; height: 30px; margin-right: 1rem;">
+              <div style="color: white;">2</div>
+            </div>
+            Assign value peer DKA
+          </div>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row mt-4">
+          <div class="col-lg-10">
+            <dx-data-grid [dataSource]="tableDS" [showColumnLines]="true" [showRowLines]="true" [showBorders]="true"
+              [height]="500" [rowAlternationEnabled]="true" [columnAutoWidth]="true" [focusedRowEnabled]="true"
+              (onFocusedRowChanged)="onDatagridFocusedRowChanged($event)">
+              <dxo-editing [allowUpdating]="true" [allowAdding]="false" [allowDeleting]="false"
+                [selectTextOnEditStart]="true" [useIcons]="true" mode="cell">
+              </dxo-editing>
+              <dxo-grouping [allowCollapsing]="false" [contextMenuEnabled]="true" expandMode="rowClick"></dxo-grouping>
+              <dxo-group-panel [visible]="false" emptyPanelText="Relative Weights of Computing Knowledge Areas">
+              </dxo-group-panel>
+              <dxi-column dataField="id" [allowEditing]="false" [visible]="false"></dxi-column>
+              <dxi-column dataField="dkagFormattedName" [allowEditing]="false" [groupIndex]="0" caption=""
+                [sortIndex]="0" sortOrder="asc">
+              </dxi-column>
+              <dxi-column dataField="dkaIndex" [sortIndex]="1" sortOrder="asc" [visible]="false">
+              </dxi-column>
+              <dxi-column dataField="dkaFormattedIndex" [caption]="'Index'" [width]="60" [allowEditing]="false"
+                [allowFiltering]="false" [allowSorting]="false" [visible]="true">
+              </dxi-column>
+              <dxi-column [caption]="'Discipline Knowledge Area'" [allowEditing]="false" [allowFiltering]="false"
+                [allowSorting]="false" [visible]="true" cellTemplate="dkaNameTemplate"></dxi-column>
+              <div *dxTemplate="let data of 'dkaNameTemplate'" class="text-break text-wrap">
+                <div class="d-flex align-items-center m-0"
+                  [ngClass]="datagridSelectedRowDkaId == data.data.dkaId ? 'fw-bold': ''">
+                  <span>{{data.data.dkaName}}</span>
+                  <mat-icon *ngIf="data.data.dkaDescription != null" style="transform: scale(.75);">check</mat-icon>
+                </div>
+                <p class="m-0" *ngIf="datagridSelectedRowDkaId == data.data.dkaId">{{data.data.dkaDescription}}</p>
+              </div>
+              <dxi-column [caption]="'Value'" alignment="center">
+                <dxi-column dataField="value" caption="(0-5)" alignment="center" [width]="80" [allowEditing]="true"
+                  [allowFiltering]="false" [allowSorting]="false" [visible]="true">
+                  <dxi-validation-rule type="required"></dxi-validation-rule>
+                </dxi-column>
+              </dxi-column>
+              <dxo-search-panel [visible]="false"></dxo-search-panel>
+              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+              <dxo-paging [enabled]="false"></dxo-paging>
+              <dxo-scrolling mode="virtual" columnRenderingMode="virtual"></dxo-scrolling>
+            </dx-data-grid>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

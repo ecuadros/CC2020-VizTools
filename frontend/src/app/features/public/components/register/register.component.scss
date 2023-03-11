@@ -1,0 +1,13 @@
+::ng-deep .mat-horizontal-stepper-header-container {
+  display: none !important;
+}
+
+mat-stepper {
+  background: transparent !important;
+}
+
+@media (max-width: 768px) {
+  .register-button {
+    margin-top: 1rem !important;
+  }
+}

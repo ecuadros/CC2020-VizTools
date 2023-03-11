@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="row">
+    <mat-card class="mt-4 mb-2">
+      <mat-card-header>
+        <mat-card-title>Your Programs:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-lg-3 my-2">
+            <app-select-search [label]="'Programs'" [options$]="ownProgramsFiltered$" [keepSelectedOption]="false"
+              (onOptionSelected)="onOwnProgramSelected($event)"></app-select-search>
+          </div>
+        </div>
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let program of selectedPrograms" (removed)="onOwnProgramRemoved(program)">
+            <div class="d-flex align-items-center gap-3">
+              <ngx-colors ngx-colors-trigger [palette]="colorPalette" [(ngModel)]="program.color"
+                (change)="onColorSelectedChange()"></ngx-colors>
+              {{ program.formattedName }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </div>
+          </mat-chip>
+        </mat-chip-listbox>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="mb-2">
+      <mat-card-header>
+        <mat-card-title>Compare with CC2020 programs:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-lg-3 my-2">
+            <app-select-search [label]="'Disciplines'" [options$]="disciplinesFiltered$" [keepSelectedOption]="false"
+              (onOptionSelected)="onDisciplineSelected($event)"></app-select-search>
+          </div>
+        </div>
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let discipline of selectedDisciplines" (removed)="onDisciplineRemoved(discipline)">
+            <div class="d-flex align-items-center gap-3">
+              <ngx-colors ngx-colors-trigger [palette]="colorPalette" [(ngModel)]="discipline.color"
+                (change)="onColorSelectedChange()"></ngx-colors>
+              {{ discipline.formattedName }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </div>
+          </mat-chip>
+        </mat-chip-listbox>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="mb-2">
+      <mat-card-header>
+        <mat-card-title>Compare with other institutions:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-lg-3 my-2">
+            <app-select-search [label]="'Countries'" [options$]="countriesFiltered$"
+              (onOptionSelected)="onCountrySelected($event)"></app-select-search>
+          </div>
+          <div class="col-lg-3 my-2" *ngIf="selectedCountry">
+            <app-select-search [label]="'Institutions'" [options$]="institutionsFiltered$"
+              (onOptionSelected)="onInstitutionSelected($event)"></app-select-search>
+          </div>
+          <div class="col-lg-3 my-2" *ngIf="selectedInstitution">
+            <app-select-search [label]="'Programs'" [options$]="otherPrograms$" [keepSelectedOption]="false"
+              (onOptionSelected)="onOtherProgramSelected($event)"></app-select-search>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="mb-2" *ngIf="shareLink != ''">
+      <mat-card-content>
+        <div class="row container-share-link">
+          <div class="col-md-2 d-flex align-items-center container-share-link-items">
+            <p class="mat-mdc-card-title" style="margin: 0;">Share Graph</p>
+          </div>
+          <div class="col-md-6 d-flex align-items-center container-share-link-items container-link-input">
+            <mat-form-field style="width: 100%;">
+              <input matInput #linkInput type="text" [(ngModel)]="shareLink" [readonly]="true" onClick="this.select();">
+              <button matSuffix mat-icon-button aria-label="Copy to Clipboard" [cdkCopyToClipboard]="shareLink">
+                <mat-icon>content_copy</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="col-md-2 d-flex align-items-center container-share-link-items">
+            <button mat-raised-button (click)="openShareBox(shareBoxTemplate)" class="h-100 px-4 share-link-button" color="accent">
+              <mat-icon>share</mat-icon>
+              <span>Share</span>
+            </button>
+            <ng-template #shareBoxTemplate>
+              <h2 mat-dialog-title>Share</h2>
+              <mat-dialog-content>
+                <share-buttons [url]="shareLink" theme="material-dark" [showText]="true"></share-buttons>
+              </mat-dialog-content>
+              <mat-dialog-actions align="end">
+                <button mat-button mat-dialog-close>Cancel</button>
+              </mat-dialog-actions>
+             </ng-template>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <mat-card class="mb-4 p-4">
+      <app-line-chart [series$]="series$"></app-line-chart>
+    </mat-card>
+  </div>
+</div>

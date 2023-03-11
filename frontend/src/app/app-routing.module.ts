@@ -1,31 +1,20 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, ExtraOptions } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { UserGuard } from '@core/guards';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/pages.module')
-      .then(m => m.PagesModule),
+    loadChildren: () => import('@features/public/public.module').then(m => m.PublicModule)
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module')
-      .then(m => m.AuthModule),
-  },
-  {
-    path: 'admin',
-    loadChildren: () => import('./admin/admin.module')
-      .then(m => m.AdminModule),
+    loadChildren: () => import('@features/auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'user',
-    loadChildren: () => import('./user/user.module')
-      .then(m => m.UserModule),
-  },
-  {
-    path: '',
-    redirectTo: '',
-    pathMatch: 'full'
+    loadChildren: () => import('@features/user/user.module').then(m => m.UserModule),
+    canLoad: [() => UserGuard.canLoad()]
   },
   {
     path: '**',
@@ -33,14 +22,8 @@ const routes: Routes = [
   }
 ];
 
-const config: ExtraOptions = {
-  enableTracing: false,
-  useHash: false,
-  anchorScrolling: 'enabled'
-}
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes, config)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
