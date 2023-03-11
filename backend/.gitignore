@@ -1,7 +1,8 @@
 HELP.md
 target/
-!**/src/main/**
-!**/src/test/**
+.env
+!**/src/main/**/target/
+!**/src/test/**/target/
 
 ### STS ###
 .apt_generated
@@ -25,6 +26,13 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
+
+### Eclipse ###
+.mvn
+mvnw
+mvnw.cmd
