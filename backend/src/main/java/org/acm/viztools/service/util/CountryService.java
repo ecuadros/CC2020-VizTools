@@ -77,17 +77,14 @@ public class CountryService {
 
 	private List<CountryDto> setInstitutionAndProgramCountToCountries(List<CountryDto> itemsDto) {
 		List<Object[]> results = repository.countInstitutionsAndProgramsPerCountry();
-		for (CountryDto itemDto : itemsDto) {
-			for (Object[] result : results) {
-				if (itemDto.getId().equals((Long) result[0])) {
-					itemDto.setInstitutionCount((Long) result[1]);
-					itemDto.setProgramCount((Long) result[2]);
-				} else {
-					itemDto.setInstitutionCount(0L);
-					itemDto.setProgramCount(0L);
-				}
-			}
-		}
+		itemsDto.forEach(itemDto -> {
+			Object[] result = results.stream()
+					.filter(r -> r[0].equals(itemDto.getId()))
+					.findFirst()
+					.orElse(null);
+			itemDto.setInstitutionCount(result != null ? (Long) result[1] : 0);
+			itemDto.setProgramCount(result != null ? (Long) result[2] : 0);
+		});
 		return itemsDto;
 	}
 

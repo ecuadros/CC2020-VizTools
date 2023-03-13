@@ -99,15 +99,13 @@ public class InstitutionService {
 
 	private List<InstitutionDto> setProgramCountToInstitutions(List<InstitutionDto> itemsDto) {
 		List<Object[]> results = repository.countProgramsPerInstitution();
-		for (InstitutionDto itemDto : itemsDto) {
-			for (Object[] result : results) {
-				if (itemDto.getId().equals((Long) result[0])) {
-					itemDto.setProgramCount((Long) result[1]);
-				} else {
-					itemDto.setProgramCount(0L);
-				}
-			}
-		}
+		itemsDto.forEach(itemDto -> {
+			Object[] result = results.stream()
+					.filter(r -> r[0].equals(itemDto.getId()))
+					.findFirst()
+					.orElse(null);
+			itemDto.setProgramCount(result != null ? (Long) result[1] : 0);
+		});
 		return itemsDto;
 	}
 
