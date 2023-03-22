@@ -12,6 +12,8 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 })
 export class UserCompareToolComponent {
 
+  userInstitutionId: number = AuthService.authToken.institutionId;
+
   selectedCountry!: CountryModel;
   selectedInstitution!: InstitutionModel | undefined;
 
@@ -66,7 +68,7 @@ export class UserCompareToolComponent {
     this.dkaFacade.load();
     this.countries$ = this.countryFacade.selectCountries();
     this.disciplines$ = this.disciplineFacade.selectDisciplines();
-    this.ownPrograms$ = this.programFacade.selectProgramsByInstitution(AuthService.authToken.institutionId);
+    this.ownPrograms$ = this.programFacade.selectProgramsByInstitution(this.userInstitutionId);
     this.series$ = new BehaviorSubject([] as SeriesModel[]);
 
     this.countriesFiltered$ = this.countries$.pipe(
@@ -95,7 +97,7 @@ export class UserCompareToolComponent {
     );
   }
 
-  onOwnProgramSelected(program: ProgramModel) {
+  onProgramSelected(program: ProgramModel) {
     this.selectedPrograms.push(new ProgramModel({ ...program, color: this.getRandomColor() }));
 
     this.programFacade.selectWeightsByProgram(program.id).subscribe(weights => {
@@ -109,7 +111,7 @@ export class UserCompareToolComponent {
     });
   }
 
-  onOwnProgramRemoved(program: ProgramModel) {
+  onProgramRemoved(program: ProgramModel) {
     this.selectedPrograms = this.selectedPrograms.filter(p => p.id !== program.id);
     this.generateSeries();
   }
@@ -141,7 +143,7 @@ export class UserCompareToolComponent {
     this.institutionsFiltered$ = this.institutions$.pipe(
       map((institutions: InstitutionModel[]) => {
         let institutionsFiltered = institutions.filter((i: InstitutionModel) => {
-          return i.id !== AuthService.authToken.institutionId && i.programCount && i.programCount > 0;
+          return i.id !== this.userInstitutionId && i.programCount && i.programCount > 0;
         });
         return institutionsFiltered.map((i: InstitutionModel) => new InstitutionModel({ ...i, name: `${i.name} (${i.programCount})` }));
       })
@@ -159,25 +161,6 @@ export class UserCompareToolComponent {
         });
       })
     );
-  }
-
-  onOtherProgramSelected(program: ProgramModel) {
-    this.selectedPrograms.push(new ProgramModel({ ...program, color: this.getRandomColor() }));
-
-    this.programFacade.selectWeightsByProgram(program.id).subscribe(weights => {
-      this.selectedPrograms = this.selectedPrograms.map(p => {
-        if (p.id === program.id) {
-          return new ProgramModel({ ...p, weights });
-        }
-        return p;
-      });
-      this.generateSeries();
-    });
-  }
-
-  onOtherProgramRemoved(program: ProgramModel) {
-    this.selectedPrograms = this.selectedPrograms.filter(p => p.id !== program.id);
-    this.generateSeries();
   }
 
   onColorSelectedChange() {

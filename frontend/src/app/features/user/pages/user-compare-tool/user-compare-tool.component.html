@@ -8,20 +8,22 @@
         <div class="row">
           <div class="col-lg-3 my-2">
             <app-select-search [label]="'Programs'" [options$]="ownProgramsFiltered$" [keepSelectedOption]="false"
-              (onOptionSelected)="onOwnProgramSelected($event)"></app-select-search>
+              (onOptionSelected)="onProgramSelected($event)"></app-select-search>
           </div>
         </div>
         <mat-chip-listbox>
-          <mat-chip *ngFor="let program of selectedPrograms" (removed)="onOwnProgramRemoved(program)">
-            <div class="d-flex align-items-center gap-3">
-              <ngx-colors ngx-colors-trigger [palette]="colorPalette" [(ngModel)]="program.color"
-                (change)="onColorSelectedChange()"></ngx-colors>
-              {{ program.formattedName }}
-              <button matChipRemove>
-                <mat-icon>cancel</mat-icon>
-              </button>
-            </div>
-          </mat-chip>
+          <ng-container *ngFor="let program of selectedPrograms">
+            <mat-chip *ngIf="program.institutionId == userInstitutionId" (removed)="onProgramRemoved(program)">
+              <div class="d-flex align-items-center gap-3">
+                <ngx-colors ngx-colors-trigger [palette]="colorPalette" [(ngModel)]="program.color"
+                  (change)="onColorSelectedChange()"></ngx-colors>
+                {{ program.formattedName }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </div>
+            </mat-chip>
+          </ng-container>
         </mat-chip-listbox>
       </mat-card-content>
     </mat-card>
@@ -66,9 +68,23 @@
           </div>
           <div class="col-lg-3 my-2" *ngIf="selectedInstitution">
             <app-select-search [label]="'Programs'" [options$]="otherPrograms$" [keepSelectedOption]="false"
-              (onOptionSelected)="onOtherProgramSelected($event)"></app-select-search>
+              (onOptionSelected)="onProgramSelected($event)"></app-select-search>
           </div>
         </div>
+        <mat-chip-listbox>
+          <ng-container *ngFor="let program of selectedPrograms">
+            <mat-chip *ngIf="program.institutionId != userInstitutionId" (removed)="onProgramRemoved(program)">
+              <div class="d-flex align-items-center gap-3">
+                <ngx-colors ngx-colors-trigger [palette]="colorPalette" [(ngModel)]="program.color"
+                  (change)="onColorSelectedChange()"></ngx-colors>
+                {{ program.formattedName }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </div>
+            </mat-chip>
+          </ng-container>
+        </mat-chip-listbox>
       </mat-card-content>
     </mat-card>
     <mat-card class="mb-2" *ngIf="shareLink != ''">
@@ -98,7 +114,7 @@
               <mat-dialog-actions align="end">
                 <button mat-button mat-dialog-close>Cancel</button>
               </mat-dialog-actions>
-             </ng-template>
+            </ng-template>
           </div>
         </div>
       </mat-card-content>
