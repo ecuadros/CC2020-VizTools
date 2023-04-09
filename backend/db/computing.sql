@@ -4,6 +4,7 @@ INSERT INTO public.discipline(id, acronym, name) VALUES (3, 'CSEC', 'Cybersecuri
 INSERT INTO public.discipline(id, acronym, name) VALUES (4, 'IS', 'Information Systems');
 INSERT INTO public.discipline(id, acronym, name) VALUES (5, 'IT', 'Information Technology');
 INSERT INTO public.discipline(id, acronym, name) VALUES (6, 'SE', 'Software Engineering');
+INSERT INTO public.discipline(id, acronym, name) VALUES (7, 'DS', 'Data Science');
 
 INSERT INTO public.dkag(id, index, name) VALUES (1, 1, 'Users and Organizations');
 INSERT INTO public.dkag(id, index, name) VALUES (2, 2, 'Systems Modeling');
@@ -23,6 +24,7 @@ INSERT INTO public.dka(id, index, name, dkag_id) VALUES (7, 1, 'Security Issues 
 INSERT INTO public.dka(id, index, name, dkag_id) VALUES (8, 2, 'Systems Analysis & Design', 2);
 INSERT INTO public.dka(id, index, name, dkag_id) VALUES (9, 3, 'Requirements Analysis and Specification', 2);
 INSERT INTO public.dka(id, index, name, dkag_id) VALUES (10, 4, 'Data and Information Management', 2);
+INSERT INTO public.dka(id, index, name, dkag_id) VALUES (35, 5, 'Data Mining', 2);
 
 INSERT INTO public.dka(id, index, name, dkag_id) VALUES (11, 1, 'Virtual Systems and Services', 3);
 INSERT INTO public.dka(id, index, name, dkag_id) VALUES (12, 2, 'Intelligent Systems (AI)', 3);
@@ -63,6 +65,7 @@ INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (7, 2, 3
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (8, 1, 2, 8, 1);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (9, 1, 2, 9, 1);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (10, 1, 2, 10, 1);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (205, 0, 0, 35, 1);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (11, 1, 3, 11, 1);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (12, 1, 3, 12, 1);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (13, 2, 4, 13, 1);
@@ -99,6 +102,7 @@ INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (41, 2, 
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (42, 1, 2, 8, 2);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (43, 1, 2, 9, 2);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (44, 2, 4, 10, 2);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (206, 0, 0, 35, 2);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (45, 1, 3, 11, 2);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (46, 3, 5, 12, 2);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (47, 0, 2, 13, 2);
@@ -135,6 +139,7 @@ INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (75, 4, 
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (76, 1, 2, 8, 3);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (77, 0, 2, 9, 3);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (78, 2, 3, 10, 3);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (207, 0, 0, 35, 3);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (79, 1, 2, 11, 3);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (80, 1, 2, 12, 3);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (81, 1, 3, 13, 3);
@@ -160,7 +165,7 @@ INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (100, 0,
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (101, 0, 1, 33, 3);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (102, 0, 2, 34, 3);
 
--- CSEC;
+-- IS;
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (103, 3, 5, 1, 4);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (104, 2, 3, 2, 4);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (105, 4, 5, 3, 4);
@@ -171,6 +176,7 @@ INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (109, 2,
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (110, 4, 5, 8, 4);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (111, 2, 4, 9, 4);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (112, 3, 5, 10, 4);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (208, 0, 0, 35, 4);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (113, 1, 2, 11, 4);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (114, 1, 2, 12, 4);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (115, 1, 3, 13, 4);
@@ -207,6 +213,7 @@ INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (143, 3,
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (144, 1, 3, 8, 5);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (145, 1, 3, 9, 5);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (146, 2, 3, 10, 5);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (209, 0, 0, 35, 5);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (147, 3, 4, 11, 5);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (148, 1, 2, 12, 5);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (149, 2, 4, 13, 5);
@@ -243,6 +250,7 @@ INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (177, 2,
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (178, 2, 4, 8, 6);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (179, 3, 5, 9, 6);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (180, 2, 4, 10, 6);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (210, 0, 0, 35, 6);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (181, 1, 3, 11, 6);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (182, 0, 1, 12, 6);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (183, 1, 3, 13, 6);
@@ -268,8 +276,44 @@ INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (202, 0,
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (203, 0, 1, 33, 6);
 INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (204, 0, 1, 34, 6);
 
+-- DS;
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (211, 3, 4, 1, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (212, 3, 5, 2, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (213, 0, 2, 3, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (214, 0, 1, 4, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (215, 2, 3, 5, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (216, 2, 4, 6, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (217, 3, 5, 7, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (218, 2, 4, 8, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (219, 2, 4, 9, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (220, 3, 5, 10, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (221, 4, 5, 35, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (222, 2, 3, 11, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (223, 4, 5, 12, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (224, 1, 3, 13, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (225, 2, 3, 14, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (226, 2, 3, 15, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (227, 0, 1, 16, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (228, 1, 2, 17, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (229, 0, 2, 18, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (230, 3, 5, 19, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (231, 2, 3, 20, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (232, 1, 2, 21, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (233, 1, 3, 22, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (234, 2, 3, 23, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (235, 0, 1, 24, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (236, 2, 4, 25, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (237, 1, 3, 26, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (238, 2, 4, 27, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (239, 1, 3, 28, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (240, 3, 4, 29, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (241, 2, 3, 30, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (242, 1, 3, 31, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (243, 0, 1, 32, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (244, 0, 1, 33, 7);
+INSERT INTO public.d_weight(id, min, max, dka_id, discipline_id) VALUES (245, 0, 1, 34, 7);
 
-ALTER SEQUENCE discipline_id_seq RESTART WITH 7;
+ALTER SEQUENCE discipline_id_seq RESTART WITH 8;
 ALTER SEQUENCE dkag_id_seq RESTART WITH 7;
-ALTER SEQUENCE dka_id_seq RESTART WITH 35;
-ALTER SEQUENCE d_weight_id_seq RESTART WITH 205;
+ALTER SEQUENCE dka_id_seq RESTART WITH 36;
+ALTER SEQUENCE d_weight_id_seq RESTART WITH 246;
